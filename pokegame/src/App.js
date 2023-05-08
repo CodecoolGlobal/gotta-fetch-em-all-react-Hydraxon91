@@ -21,7 +21,9 @@ function App() {
       }))
     }))
   }, [])
+  locationData.sort((a,b) => a.id-b.id)
   console.log(locationData);
+  
   // useEffect(() => {
   //   fetch(locationApi).then(response => response.json()).then(data=>{
   //     //console.log(data)
