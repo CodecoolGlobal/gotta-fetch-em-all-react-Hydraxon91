@@ -11,16 +11,17 @@ function App() {
 
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
+      console.log(i);
       fetch(`https://pokeapi.co/api/v2/location-area/${i+1}`)
       .then(res => res.json()
       .then((data)=>{
-        console.log(data)
-        setLocationData(data)
+        //console.log(data)
+        
+        setLocationData(oldData => [...oldData , data])
       }))
     }))
   }, [])
-  
-
+  console.log(locationData);
   // useEffect(() => {
   //   fetch(locationApi).then(response => response.json()).then(data=>{
   //     //console.log(data)
@@ -35,25 +36,22 @@ function App() {
   //   })
   // }, [])
   
-
   return (
     <div className="App">
-      {/* {
+      {
         locationData ? (
-          locationData.results.map((e)=>{
-            let area = fetch(e.url)
-            console.log(area);
+          locationData.map((e, index)=>{
             return(
-              <div>
-                <h1>City</h1>
+              <div key = {index}>
+                <h1>Area</h1>
                 <h2>{e.name}</h2>
-                <h1>url</h1>
-                <h2>{area[0]}</h2>
+                <h1>Pokemon in Area</h1>
+                <h2>{e.pokemon_encounters[Math.floor(Math.random()*e.pokemon_encounters.length)].pokemon.name}</h2>
               </div>
-            )
+           )
           })
         ) : <h2>Loading data</h2>
-      } */}
+      }
     </div>
   );
 }
