@@ -1,15 +1,21 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import BattleMenu from './components/battle';
 
 const locationApi = "https://pokeapi.co/api/v2/location/";
-const locationAreaApi = "https://pokeapi.co/api/v2/location-area/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
 
+const usersPokemon = [
+  `${pokeApi}bulbasaur`,
+  `${pokeApi}charizard`,
+  `${pokeApi}poliwhirl`
+]
 
 function App() {
-  const [locationData, setLocationData] = useState([]);
+  //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
-  const [pokemonData, setPokemonData] = useState();
+  const [pokemonData, setPokemonData] = useState(usersPokemon);
+  const [inBattle, setInBattle] = useState(false)
 
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
@@ -18,7 +24,7 @@ function App() {
       .then(res => res.json()
       .then((data)=>{
         //console.log(data.areas[0].url)
-        setLocationData(oldData => [...oldData , data])
+        //setLocationData(oldData => [...oldData , data])
         let areaObject = {
           location: data.name,
           id: data.id,
@@ -38,14 +44,18 @@ function App() {
   locationAreaData.sort((a,b) => a.id-b.id)
   //console.log(locationData);
   console.log(locationAreaData);
-  
+  function EnterBattle(){
+
+  }
+
   return (
     <div className="App">
       {
-        locationAreaData ? (
+        (
+          locationAreaData ? (
           locationAreaData.map((e, index)=>{
             let pokemon;
-            e.area !=undefined ?(
+            e.area !==undefined ?(
              pokemon = e.area.pokemon_encounters[Math.floor(Math.random()*e.area.pokemon_encounters.length)].pokemon.name
              ) : pokemon = "NO POKEMON HERE"
             return(
@@ -54,10 +64,12 @@ function App() {
                 <h2>{e.location}</h2>
                 <h1>Pokemon in Area</h1>
                 <h2>{pokemon}</h2>
+                <button onClick={EnterBattle()}>Enter Area</button>
               </div>
            )
           })
         ) : <h2>Loading data</h2>
+        )
       }
     </div>
   );
