@@ -7,28 +7,30 @@ const locationApi = "https://pokeapi.co/api/v2/location/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
 
 const usersPokemonArr = [
-  `${pokeApi}bulbasaur`,
-  `${pokeApi}charizard`,
-  `${pokeApi}poliwhirl`
+  `bulbasaur`,
+  `charizard`,
+  `poliwhirl`
 ]
 
 function App() {
   //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
-  const [enemyPokemonData, setEnemyPokemonData] = useState();
   const [inBattle, setInBattle] = useState(false);
-  const [userPokemon, setUserPokemon] = useState([]);
+  const [userPokemon, setUserPokemon] = useState(usersPokemonArr[0]);
+  const [userPokemonData, setUserPokemonData] = useState();
   const [enemyPokemon, setEnemyPokemon] = useState();
-
+  const [enemyPokemonData, setEnemyPokemonData] = useState();
+  
   useEffect(()=>{
-    Promise.all(usersPokemonArr.map((e)=>{
-      fetch(e).then(res => res.json().then((data)=>{
+    userPokemon !== undefined?
+      fetch(`${pokeApi}${userPokemon}`).then(res => res.json().then((data)=>{
         //console.log(data);
-        setUserPokemon(oldData => [...oldData , data])
-      }))
-    }))
+        setUserPokemonData(data)
+      })) : console.log("User pokemon is undefined");
   },[])
-  console.log(userPokemon);
+
+  console.log("User pokemon ",userPokemon);
+  console.log("User pokemon data: ", userPokemonData);
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
       //console.log(i);
@@ -53,6 +55,7 @@ function App() {
       }))
     }))
   }, [])
+
   locationAreaData.sort((a,b) => a.id-b.id)
   //console.log(locationData);
   //console.log(locationAreaData);
@@ -70,7 +73,7 @@ function App() {
     }
     }, [enemyPokemon])
 
-    console.log("pokemon ", enemyPokemonData);
+    console.log(" enemy pokemon ", enemyPokemonData);
 
   return (
     <div className="App">
