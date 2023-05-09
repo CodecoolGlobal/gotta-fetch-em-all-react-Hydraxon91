@@ -1,0 +1,48 @@
+.background{
+    position: absolute;
+    /* background-position: center; */
+    background-image: url("background.png");
+    background-repeat: no-repeat;
+    background-size:contain;
+    height: 700px;
+    width: 900px;
+    margin-top: 0;
+    padding-top: 0;
+    /* background-color: aqua; */
+}
+.font{
+    color: pink;
+}
+.player{
+    position: fixed;
+    display: flex;
+    width: 350px;
+    bottom:650px;
+    left:50px;
+}
+.playerName{
+    position: fixed;
+    display: flex;
+    width: 350px;
+    bottom:870px;
+    left:170px;
+    text-transform: capitalize;
+}
+.player:hover{
+    width: 400px;
+}
+.enemy{
+    position: fixed;
+    display: flex;
+    width: 350px; 
+    bottom:870px;
+    left:520px;
+}
+.enemyName{
+    position: fixed;
+    display: flex;
+    width: 350px;
+    bottom:1140px;
+    left:630px;
+    text-transform: capitalize;
+}
