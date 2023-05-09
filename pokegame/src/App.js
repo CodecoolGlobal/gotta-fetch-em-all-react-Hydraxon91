@@ -15,7 +15,7 @@ const usersPokemon = [
 function App() {
   //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
-  const [pokemonData, setPokemonData] = useState(usersPokemon);
+  const [pokemonData, setPokemonData] = useState();
   const [inBattle, setInBattle] = useState(false)
 
   useEffect(() => {
@@ -50,19 +50,13 @@ function App() {
   return (
     <div className="App">
       {
-        (
-          locationAreaData ? (
-          locationAreaData.map((e, index)=>{
-            let pokemon;
-            e.area !==undefined ?(
-             pokemon = e.area.pokemon_encounters[Math.floor(Math.random()*e.area.pokemon_encounters.length)].pokemon.name
-             ) : pokemon = "NO POKEMON HERE"
-            return(
-              <MainPage index = {index} pokemon = {pokemon} location = {e.location} setBattleState = {setInBattle}></MainPage>
-           )
-          })
-        ) : <h2>Loading data</h2>
-        )
+        locationAreaData ? 
+          !inBattle ?
+            <MainPage 
+            locationAreaData={locationAreaData} setBattleState = {setInBattle} setPokemonData = {setPokemonData}></MainPage>
+          :
+            <BattleMenu setBattleState = {setInBattle}></BattleMenu>
+        : <h2>Loading data</h2>
       }
     </div>
   );
