@@ -2,24 +2,11 @@ import React, { useEffect, useState } from "react";
 
 function MainPage(props){
     let locationAreaData = props.locationAreaData;
-    const [enemyPokemon, setEnemyPokemon] = useState()
-    console.log("ENEMY ", enemyPokemon);
-
-    useEffect(()=> {
-        if(enemyPokemon != undefined){
-        fetch(`https://pokeapi.co/api/v2/pokemon/${enemyPokemon}`)
-        .then(res => res.json()
-        .then(data => {
-            console.log(data);
-        }))
-    }
-    }, [enemyPokemon])
 
     function EnterBattle(location, pokemon){
         console.log(`Entered battle in ${location} against ${pokemon}`);
         
-        setEnemyPokemon(pokemon)
-        console.log(enemyPokemon);
+        props.setEnemyPokemon(pokemon)
         props.setBattleState(true)
     }
 

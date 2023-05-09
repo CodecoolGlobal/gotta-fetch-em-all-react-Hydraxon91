@@ -15,9 +15,10 @@ const usersPokemonArr = [
 function App() {
   //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
-  const [pokemonData, setPokemonData] = useState();
+  const [enemyPokemonData, setEnemyPokemonData] = useState();
   const [inBattle, setInBattle] = useState(false);
   const [userPokemon, setUserPokemon] = useState([]);
+  const [enemyPokemon, setEnemyPokemon] = useState();
 
   useEffect(()=>{
     Promise.all(usersPokemonArr.map((e)=>{
@@ -56,6 +57,20 @@ function App() {
   //console.log(locationData);
   //console.log(locationAreaData);
 
+  
+    console.log("ENEMY ", enemyPokemon);
+
+    useEffect(()=> {
+        if(enemyPokemon != undefined){
+        fetch(`https://pokeapi.co/api/v2/pokemon/${enemyPokemon}`)
+        .then(res => res.json()
+        .then(data => {
+            setEnemyPokemonData(data)
+        }))
+    }
+    }, [enemyPokemon])
+
+    console.log("pokemon ", enemyPokemonData);
 
   return (
     <div className="App">
@@ -63,9 +78,9 @@ function App() {
         locationAreaData ? 
           !inBattle ?
             <MainPage 
-            locationAreaData={locationAreaData} setBattleState = {setInBattle} setPokemonData = {setPokemonData}></MainPage>
+            locationAreaData={locationAreaData} setBattleState = {setInBattle} setEnemyPokemon={setEnemyPokemon}></MainPage>
           :
-            <BattleMenu setBattleState = {setInBattle}></BattleMenu>
+            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData}></BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>
