@@ -44,7 +44,7 @@ function App() {
   }, [])
   locationAreaData.sort((a,b) => a.id-b.id)
   //console.log(locationData);
-  console.log(locationAreaData);
+  //console.log(locationAreaData);
 
 
   return (
