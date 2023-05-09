@@ -6,7 +6,7 @@ import MainPage from './components/main';
 const locationApi = "https://pokeapi.co/api/v2/location/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
 
-const usersPokemon = [
+const usersPokemonArr = [
   `${pokeApi}bulbasaur`,
   `${pokeApi}charizard`,
   `${pokeApi}poliwhirl`
@@ -16,11 +16,21 @@ function App() {
   //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
   const [pokemonData, setPokemonData] = useState();
-  const [inBattle, setInBattle] = useState(false)
+  const [inBattle, setInBattle] = useState(false);
+  const [userPokemon, setUserPokemon] = useState([]);
 
+  useEffect(()=>{
+    Promise.all(usersPokemonArr.map((e)=>{
+      fetch(e).then(res => res.json().then((data)=>{
+        //console.log(data);
+        setUserPokemon(oldData => [...oldData , data])
+      }))
+    }))
+  },[])
+  console.log(userPokemon);
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
-      console.log(i);
+      //console.log(i);
       fetch(`${locationApi}${i+1}`)
       .then(res => res.json()
       .then((data)=>{
@@ -44,7 +54,7 @@ function App() {
   }, [])
   locationAreaData.sort((a,b) => a.id-b.id)
   //console.log(locationData);
-  console.log(locationAreaData);
+  //console.log(locationAreaData);
 
 
   return (
