@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import BattleMenu from './components/battle';
+import MainPage from './components/main';
 
 const locationApi = "https://pokeapi.co/api/v2/location/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
@@ -44,9 +45,7 @@ function App() {
   locationAreaData.sort((a,b) => a.id-b.id)
   //console.log(locationData);
   console.log(locationAreaData);
-  function EnterBattle(){
 
-  }
 
   return (
     <div className="App">
@@ -59,13 +58,7 @@ function App() {
              pokemon = e.area.pokemon_encounters[Math.floor(Math.random()*e.area.pokemon_encounters.length)].pokemon.name
              ) : pokemon = "NO POKEMON HERE"
             return(
-              <div key = {index}>
-                <h1>Area</h1>
-                <h2>{e.location}</h2>
-                <h1>Pokemon in Area</h1>
-                <h2>{pokemon}</h2>
-                <button onClick={EnterBattle()}>Enter Area</button>
-              </div>
+              <MainPage index = {index} pokemon = {pokemon} location = {e.location} setBattleState = {setInBattle}></MainPage>
            )
           })
         ) : <h2>Loading data</h2>
