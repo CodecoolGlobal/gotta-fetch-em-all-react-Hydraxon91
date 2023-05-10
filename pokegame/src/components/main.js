@@ -25,7 +25,7 @@ function MainPage(props) {
           e.area.pokemon_encounters.map((e) =>
             pokemonArray.push(e.pokemon.name)
           );
-          console.log(pokemonArray);
+          //console.log(pokemonArray);
         } else {
           pokemon = "NO POKEMON HERE";
         }
