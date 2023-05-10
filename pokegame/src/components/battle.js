@@ -22,10 +22,13 @@ function BattleMenu(props) {
     if (props.userPokemonData) {
       setAttackerHP(props.userPokemonData.stats[0].base_stat);
     }
+    
+  }, [props.userPokemonData]);
+  useEffect(() => {
     if (props.enemyPokemonData) {
       setDefenderHP(props.enemyPokemonData.stats[0].base_stat);
     }
-  }, [props.userPokemonData, props.enemyPokemonData]);
+  },[props.enemyPokemonData])
 
   return (
     <div
@@ -38,8 +41,6 @@ function BattleMenu(props) {
       {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
         <div>
-          <button onClick={()=>{props.setUserPokemon("pikachu")}}>Change test</button>
-          <button onClick={()=>{props.setUserPokemon("charmander")}}>Change test2</button>
           <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
           <img
             src={props.enemyPokemonData.sprites.front_default}
@@ -87,10 +88,6 @@ function BattleMenu(props) {
                 const result = fight(updatedAttacker, updatedDefender);
                 setAttackerHP(result.hpAttacker);
                 setDefenderHP(result.hpDefender);
-                //console.log("battle.js ", result.winner);
-                // result.winner === props.userPokemonData.name ? (props.setUsersPokemonArr(oldData => [...oldData , props.enemyPokemonData.name])) :
-                // (console.log("You lost"));
-                // console.log(props.usersPokemonArr);
                 if (result.winner === props.userPokemonData.name) {
                   props.setUsersPokemonArr((oldData) => [
                     ...oldData,
@@ -107,6 +104,9 @@ function BattleMenu(props) {
             >
               Fight!
             </Button>
+          {props.usersPokemonArr.map((e)=>(
+            <button onClick={()=>{props.setUserPokemon(e)}}>{e}</button>
+          ))}
           </>
         </div>
       ) : (
