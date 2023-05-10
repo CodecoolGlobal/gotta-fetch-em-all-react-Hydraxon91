@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
 import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
-import bgs from "./backgrounds"
+import bgs from "./backgrounds";
 
 function BattleMenu(props) {
   //console.log(fight);
@@ -28,8 +29,13 @@ function BattleMenu(props) {
   }, [props.userPokemonData, props.enemyPokemonData]);
 
   return (
-    <div  className={styles.background} style={{backgroundImage: `url(${bgs[Math.floor(Math.random()*11)]})`}}>
-      <button onClick={() => GoBack()}>Go Back</button>
+    <div
+      className={styles.background}
+      style={{ backgroundImage: `url(${bgs[Math.floor(Math.random() * 11)]})` }}
+    >
+      <Button variant="warning" onClick={() => GoBack()}>
+        Go Back
+      </Button>
       {/* <h1>This is the battle menu</h1> */}
       {props.userPokemonData && props.enemyPokemonData ? (
         <div>
@@ -53,7 +59,8 @@ function BattleMenu(props) {
             <h2>
               {props.enemyPokemonData.name}'s HP: {defenderHP}
             </h2>
-            <button
+            <Button
+              variant="danger"
               onClick={() => {
                 const updatedAttacker = {
                   ...props.userPokemonData,
@@ -78,24 +85,26 @@ function BattleMenu(props) {
                 const result = fight(updatedAttacker, updatedDefender);
                 setAttackerHP(result.hpAttacker);
                 setDefenderHP(result.hpDefender);
-                console.log("battle.js ",result.winner)
+                console.log("battle.js ", result.winner);
                 // result.winner === props.userPokemonData.name ? (props.setUsersPokemonArr(oldData => [...oldData , props.enemyPokemonData.name])) :
                 // (console.log("You lost"));
                 // console.log(props.usersPokemonArr);
                 if (result.winner === props.userPokemonData.name) {
-                  props.setUsersPokemonArr(oldData => [...oldData , props.enemyPokemonData.name]);
+                  props.setUsersPokemonArr((oldData) => [
+                    ...oldData,
+                    props.enemyPokemonData.name,
+                  ]);
                   console.log("You win");
                   //console.log(props.usersPokemonArr);
                   GoBack();
-                }
-                else if (result.winner === props.enemyPokemonData.name){
+                } else if (result.winner === props.enemyPokemonData.name) {
                   console.log("You lost");
                   GoBack();
                 }
               }}
             >
               Fight!
-            </button>
+            </Button>
           </>
         </div>
       ) : (

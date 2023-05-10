@@ -1,5 +1,6 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
+import Location from "./LocationCard";
+import { Row, Col } from "react-bootstrap";
 
 function MainPage(props) {
   let locationAreaData = props.locationAreaData;
@@ -11,47 +12,33 @@ function MainPage(props) {
     props.setBattleState(true);
   }
 
-  //console.log(locationAreaData)
-  return locationAreaData.map((e, index) => {
-    let pokemon;
-    e.area !== undefined
-      ? (pokemon =
-          e.area.pokemon_encounters[
-            Math.floor(Math.random() * e.area.pokemon_encounters.length)
-          ].pokemon.name)
-      : (pokemon = "NO POKEMON HERE");
-    return (
-        
-                locationAreaData.map((e, index)=>{
-                    let pokemon;
-                    let pokemonArray =[];
-                    if (e.area !== undefined) {
-                        pokemon = e.area.pokemon_encounters[Math.floor(Math.random()*e.area.pokemon_encounters.length)].pokemon.name
-                        e.area.pokemon_encounters.map((e)=>pokemonArray.push(e.pokemon.name))
-                        console.log(pokemonArray);
-                    }
-                    // e.area !==undefined ?(
-                    //     pokemon = e.area.pokemon_encounters[Math.floor(Math.random()*e.area.pokemon_encounters.length)].pokemon.name
-                    //     // e.area.pokemon_encounters.map((e)=>pokemonArray.push(e.pokemon.name))
-                  
-                    // ) : pokemon = "NO POKEMON HERE"
-                  return(
-                      <div key = {index}>
-                          <h1>Area</h1>
-                          <h2>{e.location}</h2>
-                          <h1>Pokemons in Area</h1>
-                          {pokemonArray.map((e)=>(
-                            <h2>{e}</h2>
-                          ))}
-                          {/* <h2>{pokemon}</h2> */}
-                          <button onClick={()=>EnterBattle(e.location, pokemon)}>Enter Area</button>
-                      </div>
-                 )
-                })  
-        
-        
-        // <h2>test</h2>
-    )
+  return (
+    <Row className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      {locationAreaData.map((e, index) => {
+        let pokemon;
+        let pokemonArray = [];
+        if (e.area !== undefined) {
+          pokemon =
+            e.area.pokemon_encounters[
+              Math.floor(Math.random() * e.area.pokemon_encounters.length)
+            ].pokemon.name;
+          e.area.pokemon_encounters.map((e) =>
+            pokemonArray.push(e.pokemon.name)
+          );
+          console.log(pokemonArray);
+        } else {
+          pokemon = "NO POKEMON HERE";
+        }
+        return (
+          <Col key={index} className="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <Location
+              location={e.location}
+              pokemonArray={pokemonArray}
+            ></Location>
+          </Col>
+        );
+      })}
+    </Row>
+  );
 }
-
 export default MainPage;
