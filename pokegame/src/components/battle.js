@@ -129,10 +129,14 @@ function BattleMenu(props) {
             <div className="row mt-5" style={{position: 'relative', top:'35%'}}>
               {
               !battleStart ?
-              (props.usersPokemonArr.map((pokemon, index) => (
+              (props.usersPokemonArrData.map((pokemon, index) => (
                 <div className="col-md-4 mt-5" key={index}>
                   <Pokemon
-                    name={pokemon}
+                    name={pokemon.name}
+                    hp={pokemon.stats[0].base_stat}
+                    attack={pokemon.stats[1].base_stat}
+                    defense={pokemon.stats[2].base_stat}
+                    sprite = {pokemon.sprites.front_default}
                     // onClick={() => {
                     //   props.setUserPokemon(pokemon);
                     //   console.log("teszt");
@@ -142,51 +146,59 @@ function BattleMenu(props) {
                 </div>
               ))) :
               (
-                <Button 
+                <div>
+                  <Button 
+                  className="mt-5"
+                  style={{ width: '25%', margin:'auto'}}
+                  variant="danger"
+                  // style={{zIndex: '-2'}}
+                  onClick={() => {
+                    const updatedAttacker = {
+                      ...props.userPokemonData,
+                      stats: [
+                        {
+                          ...props.userPokemonData.stats[0],
+                          base_stat: attackerHP,
+                        },
+                        ...props.userPokemonData.stats.slice(1),
+                      ],
+                    };
+                    const updatedDefender = {
+                      ...props.enemyPokemonData,
+                      stats: [
+                        {
+                          ...props.enemyPokemonData.stats[0],
+                          base_stat: defenderHP,
+                        },
+                        ...props.enemyPokemonData.stats.slice(1),
+                      ],
+                    };
+                    const result = fight(updatedAttacker, updatedDefender);
+                    setAttackerHP(result.hpAttacker);
+                    setDefenderHP(result.hpDefender);
+                    if (result.winner === props.userPokemonData.name) {
+                      props.setUsersPokemonArr((oldData) => [
+                        ...oldData,
+                        props.enemyPokemonData.name,
+                      ]);
+                      console.log("You win");
+                      //console.log(props.usersPokemonArr);
+                      GoBack();
+                    } else if (result.winner === props.enemyPokemonData.name) {
+                      console.log("You lost");
+                      GoBack();
+                    }
+                  }}
+                >
+                  Fight!
+                </Button>
+                <Button
                 className="mt-5"
                 style={{ width: '25%', margin:'auto'}}
                 variant="danger"
-                // style={{zIndex: '-2'}}
-                onClick={() => {
-                  const updatedAttacker = {
-                    ...props.userPokemonData,
-                    stats: [
-                      {
-                        ...props.userPokemonData.stats[0],
-                        base_stat: attackerHP,
-                      },
-                      ...props.userPokemonData.stats.slice(1),
-                    ],
-                  };
-                  const updatedDefender = {
-                    ...props.enemyPokemonData,
-                    stats: [
-                      {
-                        ...props.enemyPokemonData.stats[0],
-                        base_stat: defenderHP,
-                      },
-                      ...props.enemyPokemonData.stats.slice(1),
-                    ],
-                  };
-                  const result = fight(updatedAttacker, updatedDefender);
-                  setAttackerHP(result.hpAttacker);
-                  setDefenderHP(result.hpDefender);
-                  if (result.winner === props.userPokemonData.name) {
-                    props.setUsersPokemonArr((oldData) => [
-                      ...oldData,
-                      props.enemyPokemonData.name,
-                    ]);
-                    console.log("You win");
-                    //console.log(props.usersPokemonArr);
-                    GoBack();
-                  } else if (result.winner === props.enemyPokemonData.name) {
-                    console.log("You lost");
-                    GoBack();
-                  }
-                }}
-              >
-                Fight!
-              </Button>
+                onClick={()=>{setBattleStart(false)}}
+                >Change Pokemon</Button>
+              </div>
               )
               }
             </div>

@@ -17,12 +17,14 @@ function App() {
   //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
   const [inBattle, setInBattle] = useState(false);
-  const [usersPokemonArr, setUsersPokemonArr] = useState(starterPokemonArr)
+  const [usersPokemonArr, setUsersPokemonArr] = useState(starterPokemonArr);
+  const [usersPokemonArrData, setUsersPokemonArrData] = useState([]);
   const [userPokemon, setUserPokemon] = useState(usersPokemonArr[0]);
   const [userPokemonData, setUserPokemonData] = useState();
   const [enemyPokemon, setEnemyPokemon] = useState();
   const [enemyPokemonData, setEnemyPokemonData] = useState();
 
+  
   // const randomBG = bgs[Math.floor(Math.random() * 11)];
   //Changes the background whenever you leave/enter an area
   const [randomBG, setRandomBG] = useState(bgs[Math.floor(Math.random() * 11)]);
@@ -32,17 +34,29 @@ function App() {
   
   //Changes userPokemonData whenever userPokemon changes
   useEffect(()=>{
-    console.log("Useeffect1 ran");
-    userPokemon !== undefined || userPokemon !== userPokemonData.name?
-      fetch(`${pokeApi}${userPokemon}`).then(res => res.json().then((data)=>{
-        console.log("Useeffect ran");
-        setUserPokemonData(data)
-      })) : console.log("User pokemon is undefined");
-  },[userPokemon])
+    
+    // userPokemon !== undefined || userPokemon !== userPokemonData.name ?
+    //   fetch(`${pokeApi}${userPokemon}`).then(res => res.json().then((data)=>{
+    //     //console.log("Useeffect ran");
+    //     setUserPokemonData(data)
+    //   })) 
+    // : console.log("User pokemon is undefined");
+    let pepe = usersPokemonArrData.find(e =>{return e.name===userPokemon});
+    console.log("pepe is ",pepe);
+    setUserPokemonData(pepe);
+  },[userPokemon, usersPokemonArrData])
 
 
-  //console.log("User pokemon ",userPokemon);
-  //console.log("User pokemon data: ", userPokemonData);
+  //Fetching all the pokemons in the UsersPokemonArr
+  useEffect(()=>{
+    Promise.all(usersPokemonArr.map((e)=>{
+      fetch(`${pokeApi}${e}`).then(res=>res.json().then(data=>{
+        setUsersPokemonArrData(oldData => [...oldData, data]);
+      }))
+    }))
+  }, [usersPokemonArr])
+  console.log(usersPokemonArrData);
+
   //Fetches the first 20 locations
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
@@ -100,7 +114,8 @@ function App() {
             <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} 
             userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} 
             usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArr={setUsersPokemonArr} 
-            randomBG={randomBG} setUserPokemon={setUserPokemon} userPokemon={userPokemon}></BattleMenu>
+            randomBG={randomBG} setUserPokemon={setUserPokemon} userPokemon={userPokemon}
+            usersPokemonArrData={usersPokemonArrData}></BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>
