@@ -32,6 +32,8 @@ function MainPage(props) {
         return (
           <Col key={index} className="col-lg-3 col-md-4 col-sm-6 mb-4">
             <Location
+              handleClick={EnterBattle}
+              pokemon={pokemon}
               location={e.location}
               pokemonArray={pokemonArray}
             ></Location>

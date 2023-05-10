@@ -3,7 +3,9 @@ import Card from "react-bootstrap/Card";
 
 function Location(props) {
   const location = props.location;
-  const pokemonArray = props.pokemonArray;
+    const pokemonArray = props.pokemonArray;
+    const pokemon = props.pokemon
+    const handleClick = props.handleClick
 
   return (
     <Card style={{ width: "18rem" }} bg="secondary">
@@ -13,7 +15,7 @@ function Location(props) {
         <Card.Text>
           Lórum ipse zatos grabárt horol: a törper készeg rösken, törgecskes enyzetség ez. A másik nevezgő pocki a konum surkoma, ez azonban általában a tetések hatós lertásától
         </Card.Text>
-        <Button variant="danger">Enter area!</Button>
+        <Button variant="danger" onClick={() => handleClick(location, pokemon)}>Enter area!</Button>
       </Card.Body>
     </Card>
   );
