@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
-import bgs from "./backgrounds";
+
 
 function BattleMenu(props) {
   //console.log(fight);
@@ -31,7 +31,7 @@ function BattleMenu(props) {
   return (
     <div
       className={styles.background}
-      style={{ backgroundImage: `url(${bgs[Math.floor(Math.random() * 11)]})` }}
+      style={{ backgroundImage: `url(${props.randomBG})` }}
     >
       <Button variant="warning" onClick={() => GoBack()}>
         Go Back

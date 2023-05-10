@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import BattleMenu from './components/battle';
 import MainPage from './components/main';
+import bgs from './components/backgrounds';
 
 const locationApi = "https://pokeapi.co/api/v2/location/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
@@ -21,6 +22,8 @@ function App() {
   const [userPokemonData, setUserPokemonData] = useState();
   const [enemyPokemon, setEnemyPokemon] = useState();
   const [enemyPokemonData, setEnemyPokemonData] = useState();
+
+  const randomBG = bgs[Math.floor(Math.random() * 11)];
   
   useEffect(()=>{
     userPokemon !== undefined?
@@ -84,7 +87,7 @@ function App() {
             <MainPage 
             locationAreaData={locationAreaData} setBattleState = {setInBattle} setEnemyPokemon={setEnemyPokemon}></MainPage>
           :
-            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArr={setUsersPokemonArr}></BattleMenu>
+            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArr={setUsersPokemonArr} randomBG={randomBG}></BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>
