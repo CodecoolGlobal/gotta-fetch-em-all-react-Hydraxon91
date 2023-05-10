@@ -83,7 +83,7 @@ function App() {
             <MainPage 
             locationAreaData={locationAreaData} setBattleState = {setInBattle} setEnemyPokemon={setEnemyPokemon}></MainPage>
           :
-            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr}></BattleMenu>
+            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon}></BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>

@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
 
+
 function BattleMenu(props) {
   //console.log(fight);
 
   function GoBack() {
     props.setBattleState(false);
+    props.setEnemyPokemon();
   }
-
+//Attacker = player, defender = enemy
   const [attackerHP, setAttackerHP] = useState(
     props.userPokemonData?.stats?.[0]?.base_stat || 0
   );
@@ -28,7 +30,7 @@ function BattleMenu(props) {
   return (
     <div className={styles.background}>
       <button onClick={() => GoBack()}>Go Back</button>
-      <h1>This is the battle menu</h1>
+      {/* <h1>This is the battle menu</h1> */}
       {props.userPokemonData && props.enemyPokemonData ? (
         <div>
           <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
@@ -83,7 +85,7 @@ function BattleMenu(props) {
           </>
         </div>
       ) : (
-        <h2>Loading players</h2>
+        <h2>Loading players, if there in no enemy, go back</h2>
       )}
     </div>
   );
