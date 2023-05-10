@@ -147,10 +147,17 @@ function BattleMenu(props) {
                       setAttackerHP(result.hpAttacker);
                       setDefenderHP(result.hpDefender);
                       if (result.winner === props.userPokemonData.name) {
-                        props.setUsersPokemonArr((oldData) => [
+                        let loserPokemon = props.enemyPokemonData;
+                        let existingPokemon = props.usersPokemonArrData.find(pokemon => pokemon.name === loserPokemon.name);
+                        if(existingPokemon) {
+                          props.setUsersPokemonArrData(oldData => [...oldData.filter(pokemon => pokemon.name !== loserPokemon.name), loserPokemon]);
+                        } else {
+                          props.setUsersPokemonArrData(oldData => [...oldData, loserPokemon]);
+                        }
+                        /*props.setUsersPokemonArr((oldData) => [
                           ...oldData,
                           props.enemyPokemonData.name,
-                        ]);
+                        ]);*/
                         console.log("You win");
                         //console.log(props.usersPokemonArr);
                         GoBack();
