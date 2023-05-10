@@ -30,8 +30,8 @@ function App() {
       })) : console.log("User pokemon is undefined");
   },[])
 
-  console.log("User pokemon ",userPokemon);
-  console.log("User pokemon data: ", userPokemonData);
+  //console.log("User pokemon ",userPokemon);
+  //console.log("User pokemon data: ", userPokemonData);
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
       //console.log(i);
@@ -62,7 +62,7 @@ function App() {
   //console.log(locationAreaData);
 
   
-    console.log("ENEMY ", enemyPokemon);
+    //console.log("ENEMY ", enemyPokemon);
 
     useEffect(()=> {
         if(enemyPokemon != undefined){
@@ -74,7 +74,7 @@ function App() {
     }
     }, [enemyPokemon])
 
-    console.log(" enemy pokemon ", enemyPokemonData);
+    //console.log(" enemy pokemon ", enemyPokemonData);
 
   return (
     <div className="App">

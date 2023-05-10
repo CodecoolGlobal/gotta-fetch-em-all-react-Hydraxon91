@@ -29,11 +29,11 @@ export default function fight(attacker, defender) {
   attacker.stats[0].base_stat = hpAttacker;
   defender.stats[0].base_stat = hpDefender;
 
-  if (hpAttacker > 0 && hpDefender < 0) winner = attacker.name;
-  else if (hpDefender > 0 && hpAttacker < 0) winner = defender.name;
-  else if (hpAttacker < 0 && hpDefender < 0) winner = "draw";
+  if (hpAttacker > 0 && hpDefender <= 0) winner = attacker.name;
+  else if (hpDefender > 0 && hpAttacker <= 0) winner = defender.name;
+  //else if (hpAttacker < 0 && hpDefender < 0) winner = "draw";
 
-  console.log(` ${hpAttacker} vs. ${hpDefender}`);
-  console.log(winner ? "The winner is: " + winner : "");
+  //console.log(` ${hpAttacker} vs. ${hpDefender}`);
+  //console.log(winner ? "The winner is: " + winner : "");
   return { hpAttacker: hpAttacker, hpDefender: hpDefender, winner: winner };
 }
