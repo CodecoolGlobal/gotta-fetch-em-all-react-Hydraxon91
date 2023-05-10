@@ -8,6 +8,7 @@
     width: 900px;
     margin-top: 0;
     padding-top: 0;
+    z-index: -1;
     /* background-color: aqua; */
 }
 .font{
@@ -19,6 +20,7 @@
     width: 350px;
     bottom:12%;
     left:10%;
+    z-index: -2;
 }
 .playerName{
     position: absolute;
@@ -37,6 +39,7 @@
     width: 350px; 
     bottom:44%;
     left:55%;
+    z-index: -2;
 }
 .enemyName{
     position: absolute;
@@ -45,4 +48,5 @@
     bottom:85%;
     left:67%;
     text-transform: capitalize;
+    z-index: -1;
 }

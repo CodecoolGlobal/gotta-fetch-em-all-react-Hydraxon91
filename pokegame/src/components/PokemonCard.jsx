@@ -15,7 +15,7 @@ export default function Pokemon(props) {
               <Card.Text>
                A piszti zsugta kevénysége nagyon gulan, részben a csernyős jánázsok, részben a táradt jeségek miatt. Ha pedig halálják a bikát akkor teljesen parnázják, azaz öngőt gáltanak.
         </Card.Text>
-        <Button variant="danger" onClick={() => handleClick}>Choose pokemon!</Button>
+        <Button variant="danger" onClick={() => handleClick(name)}>Choose pokemon!</Button>
       </Card.Body>
     </Card>
   );
