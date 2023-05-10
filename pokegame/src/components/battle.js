@@ -11,7 +11,7 @@ function BattleMenu(props) {
     props.setBattleState(false);
     props.setEnemyPokemon();
   }
-  function changePokemon(pokemon){
+  function changePokemon(pokemon) {
     props.setUserPokemon(pokemon);
     setBattleStart(true);
     console.log("teszt");
@@ -41,23 +41,23 @@ function BattleMenu(props) {
       className={styles.background}
       style={{ backgroundImage: `url(${props.randomBG})` }}
     >
-      <Button className="mt-5" variant="warning" onClick={() => GoBack()} style={{zIndex: '-1'}}>
+      <Button className="mt-5" variant="warning" onClick={() => GoBack()} style={{ zIndex: '-1' }}>
         Go Back
       </Button>
       {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
-        <div id="battleParent" style={{height: '100%'}}>
+        <div id="battleParent" style={{ height: '100%' }}>
           <div>
             <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
             <img
               src={props.enemyPokemonData.sprites.front_default}
-              text={props.enemyPokemonData.name}
+              alt={props.enemyPokemonData.name}
               className={styles.enemy}
             ></img>
             <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
             <img
               src={props.userPokemonData.sprites.back_default}
-              text={props.userPokemonData.name}
+              alt={props.userPokemonData.name}
               className={styles.player}
             ></img>
 
@@ -126,80 +126,88 @@ function BattleMenu(props) {
             ))}
           </div> */}
           <>
-            <div className="row mt-5" style={{position: 'relative', top:'35%'}}>
+            <div className="row mt-5" style={{ position: 'relative', top: '35%' }}>
               {
-              !battleStart ?
-              (props.usersPokemonArrData.map((pokemon, index) => (
-                <div className="col-md-4 mt-5" key={index}>
-                  <Pokemon
-                    name={pokemon.name}
-                    hp={pokemon.stats[0].base_stat}
-                    attack={pokemon.stats[1].base_stat}
-                    defense={pokemon.stats[2].base_stat}
-                    sprite = {pokemon.sprites.front_default}
-                    // onClick={() => {
-                    //   props.setUserPokemon(pokemon);
-                    //   console.log("teszt");
-                    // }}
-                    handleClick={changePokemon}
-                  ></Pokemon>
-                </div>
-              ))) :
-              (
-                <div>
-                  <Button 
-                  className="mt-5"
-                  style={{ width: '25%', margin:'auto'}}
-                  variant="danger"
-                  // style={{zIndex: '-2'}}
-                  onClick={() => {
-                    const updatedAttacker = {
-                      ...props.userPokemonData,
-                      stats: [
-                        {
-                          ...props.userPokemonData.stats[0],
-                          base_stat: attackerHP,
-                        },
-                        ...props.userPokemonData.stats.slice(1),
-                      ],
-                    };
-                    const updatedDefender = {
-                      ...props.enemyPokemonData,
-                      stats: [
-                        {
-                          ...props.enemyPokemonData.stats[0],
-                          base_stat: defenderHP,
-                        },
-                        ...props.enemyPokemonData.stats.slice(1),
-                      ],
-                    };
-                    const result = fight(updatedAttacker, updatedDefender);
-                    setAttackerHP(result.hpAttacker);
-                    setDefenderHP(result.hpDefender);
-                    if (result.winner === props.userPokemonData.name) {
-                      props.setUsersPokemonArr((oldData) => [
-                        ...oldData,
-                        props.enemyPokemonData.name,
-                      ]);
-                      console.log("You win");
-                      //console.log(props.usersPokemonArr);
-                      GoBack();
-                    } else if (result.winner === props.enemyPokemonData.name) {
-                      console.log("You lost");
-                      GoBack();
-                    }
-                  }}
-                >
-                  Fight!
-                </Button>
-                <Button
-                className="mt-5"
-                style={{ width: '25%', margin:'auto'}}
-                variant="danger"
-                onClick={()=>{setBattleStart(false)}}
-                >Change Pokemon</Button>
-              </div>
-              )
+                !battleStart ?
+                  (props.usersPokemonArrData.map((pokemon, index) => (
+                    <div className="col-md-4 mt-5" key={index}>
+                      <Pokemon
+                        name={pokemon.name}
+                        hp={pokemon.stats[0].base_stat}
+                        attack={pokemon.stats[1].base_stat}
+                        defense={pokemon.stats[2].base_stat}
+                        sprite={pokemon.sprites.front_default}
+                        // onClick={() => {
+                        //   props.setUserPokemon(pokemon);
+                        //   console.log("teszt");
+                        // }}
+                        handleClick={changePokemon}
+                      ></Pokemon>
+                    </div>
+                  ))) :
+                  (
+                    <div>
+                      <Button
+                        className="mt-5"
+                        style={{ width: '25%', margin: 'auto' }}
+                        variant="danger"
+                        // style={{zIndex: '-2'}}
+                        onClick={() => {
+                          const updatedAttacker = {
+                            ...props.userPokemonData,
+                            stats: [
+                              {
+                                ...props.userPokemonData.stats[0],
+                                base_stat: attackerHP,
+                              },
+                              ...props.userPokemonData.stats.slice(1),
+                            ],
+                          };
+                          const updatedDefender = {
+                            ...props.enemyPokemonData,
+                            stats: [
+                              {
+                                ...props.enemyPokemonData.stats[0],
+                                base_stat: defenderHP,
+                              },
+                              ...props.enemyPokemonData.stats.slice(1),
+                            ],
+                          };
+                          const result = fight(updatedAttacker, updatedDefender);
+                          setAttackerHP(result.hpAttacker);
+                          setDefenderHP(result.hpDefender);
+                          if (result.winner === props.userPokemonData.name) {
+                            let loserPokemon = props.enemyPokemonData;
+                            let existingPokemon = props.usersPokemonArrData.find(pokemon => pokemon.name === loserPokemon.name);
+                            if(existingPokemon) {
+                              props.setUsersPokemonArrData((oldData) => [
+                                 ...oldData.filter(pokemon => pokemon.name !== loserPokemon.name), loserPokemon]);
+                            } else {
+                              props.setUsersPokemonArrData(oldData => [...oldData, loserPokemon])
+                            }
+                            /*props.setUsersPokemonArr((oldData) => [
+                              ...oldData,
+                              props.enemyPokemonData.name,
+                            ]);*/
+                            console.log("You win");
+                            //console.log("after win ", props.usersPokemonArrData);
+                            GoBack();
+                          } else if (result.winner === props.enemyPokemonData.name) {
+                            console.log("You lost");
+                            GoBack();
+                          }
+                        }}
+                      >
+                        Fight!
+                      </Button>
+                      <Button
+                        className="mt-5"
+                        style={{ width: '25%', margin: 'auto' }}
+                        variant="danger"
+                        onClick={() => { setBattleStart(false) }}
+                      >Change Pokemon</Button>
+                    </div>
+                  )
               }
             </div>
           </>
