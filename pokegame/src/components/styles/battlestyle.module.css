@@ -1,7 +1,7 @@
 .background{
     position: absolute;
     /* background-position: center; */
-    background-image: url("background.png");
+    /* background-image: url("img/background3.png"); */
     background-repeat: no-repeat;
     background-size:contain;
     height: 700px;
