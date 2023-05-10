@@ -23,18 +23,27 @@ function App() {
   const [enemyPokemon, setEnemyPokemon] = useState();
   const [enemyPokemonData, setEnemyPokemonData] = useState();
 
-  const randomBG = bgs[Math.floor(Math.random() * 11)];
-  
+  // const randomBG = bgs[Math.floor(Math.random() * 11)];
+  //Changes the background whenever you leave/enter an area
+  const [randomBG, setRandomBG] = useState(bgs[Math.floor(Math.random() * 11)]);
   useEffect(()=>{
-    userPokemon !== undefined?
+    setRandomBG(bgs[Math.floor(Math.random() * 11)])
+  },[inBattle])
+  
+  //Changes userPokemonData whenever userPokemon changes
+  useEffect(()=>{
+    console.log("Useeffect1 ran");
+    userPokemon !== undefined || userPokemon !== userPokemonData.name?
       fetch(`${pokeApi}${userPokemon}`).then(res => res.json().then((data)=>{
-        //console.log(data);
+        console.log("Useeffect ran");
         setUserPokemonData(data)
       })) : console.log("User pokemon is undefined");
-  },[])
+  },[userPokemon])
+
 
   //console.log("User pokemon ",userPokemon);
   //console.log("User pokemon data: ", userPokemonData);
+  //Fetches the first 20 locations
   useEffect(() => {
     Promise.all(Array.from({length: 20}, (_, i) =>{
       //console.log(i);
@@ -67,6 +76,7 @@ function App() {
   
     //console.log("ENEMY ", enemyPokemon);
 
+    //Fetches the enemypokemondata whenever the enemypokemon changes
     useEffect(()=> {
         if(enemyPokemon != undefined){
         fetch(`https://pokeapi.co/api/v2/pokemon/${enemyPokemon}`)
@@ -87,7 +97,10 @@ function App() {
             <MainPage 
             locationAreaData={locationAreaData} setBattleState = {setInBattle} setEnemyPokemon={setEnemyPokemon}></MainPage>
           :
-            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArr={setUsersPokemonArr} randomBG={randomBG}></BattleMenu>
+            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} 
+            userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} 
+            usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArr={setUsersPokemonArr} 
+            randomBG={randomBG} setUserPokemon={setUserPokemon} userPokemon={userPokemon}></BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>
