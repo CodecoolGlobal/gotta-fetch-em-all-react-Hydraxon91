@@ -40,6 +40,7 @@ function BattleMenu(props) {
       </Button>
       {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
+        <div id ="battleParent">
         <div>
           <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
           <img
@@ -104,10 +105,14 @@ function BattleMenu(props) {
             >
               Fight!
             </Button>
-          {props.usersPokemonArr.map((e)=>(
+          
+          </>
+        </div>
+        <div style={{position:'fixed', top: '50%'}}>
+        {props.usersPokemonArr.map((e)=>(
             <button onClick={()=>{props.setUserPokemon(e)}}>{e}</button>
           ))}
-          </>
+        </div>
         </div>
       ) : (
         <h2>Loading players, if there in no enemy, go back</h2>

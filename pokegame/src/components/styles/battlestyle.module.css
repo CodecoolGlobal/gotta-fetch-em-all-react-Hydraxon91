@@ -14,35 +14,35 @@
     color: pink;
 }
 .player{
-    position: fixed;
+    position: absolute;
     display: flex;
     width: 350px;
-    bottom:650px;
-    left:50px;
+    bottom:12%;
+    left:10%;
 }
 .playerName{
-    position: fixed;
+    position: absolute;
     display: flex;
     width: 350px;
-    bottom:870px;
-    left:170px;
+    bottom:50%;
+    left:22%;
     text-transform: capitalize;
 }
 .player:hover{
     width: 400px;
 }
 .enemy{
-    position: fixed;
+    position: absolute;
     display: flex;
     width: 350px; 
-    bottom:870px;
-    left:520px;
+    bottom:44%;
+    left:55%;
 }
 .enemyName{
-    position: fixed;
+    position: absolute;
     display: flex;
     width: 350px;
-    bottom:1140px;
-    left:630px;
+    bottom:85%;
+    left:67%;
     text-transform: capitalize;
 }
