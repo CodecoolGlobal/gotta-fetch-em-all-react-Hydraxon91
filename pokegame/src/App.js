@@ -6,7 +6,7 @@ import MainPage from './components/main';
 const locationApi = "https://pokeapi.co/api/v2/location/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
 
-const usersPokemonArr = [
+const starterPokemonArr = [
   `bulbasaur`,
   `charizard`,
   `poliwhirl`
@@ -16,6 +16,7 @@ function App() {
   //const [locationData, setLocationData] = useState([]);
   const [locationAreaData, setLocationAreaData] = useState([]);
   const [inBattle, setInBattle] = useState(false);
+  const [usersPokemonArr, setUsersPokemonArr] = useState(starterPokemonArr)
   const [userPokemon, setUserPokemon] = useState(usersPokemonArr[0]);
   const [userPokemonData, setUserPokemonData] = useState();
   const [enemyPokemon, setEnemyPokemon] = useState();
@@ -83,7 +84,7 @@ function App() {
             <MainPage 
             locationAreaData={locationAreaData} setBattleState = {setInBattle} setEnemyPokemon={setEnemyPokemon}></MainPage>
           :
-            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr}></BattleMenu>
+            <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArr={setUsersPokemonArr}></BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>
