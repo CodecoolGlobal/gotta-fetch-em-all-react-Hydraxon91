@@ -78,6 +78,20 @@ function BattleMenu(props) {
                 const result = fight(updatedAttacker, updatedDefender);
                 setAttackerHP(result.hpAttacker);
                 setDefenderHP(result.hpDefender);
+                console.log("battle.js ",result.winner)
+                // result.winner === props.userPokemonData.name ? (props.setUsersPokemonArr(oldData => [...oldData , props.enemyPokemonData.name])) :
+                // (console.log("You lost"));
+                // console.log(props.usersPokemonArr);
+                if (result.winner === props.userPokemonData.name) {
+                  props.setUsersPokemonArr(oldData => [...oldData , props.enemyPokemonData.name]);
+                  console.log("You win");
+                  //console.log(props.usersPokemonArr);
+                  GoBack();
+                }
+                else if (result.winner === props.enemyPokemonData.name){
+                  console.log("You lost");
+                  GoBack();
+                }
               }}
             >
               Fight!
