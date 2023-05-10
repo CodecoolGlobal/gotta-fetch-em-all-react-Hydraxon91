@@ -10,7 +10,7 @@ const pokemons = pokemonArray.join(", ").toUpperCase()
     
 
   return (
-    <Card style={{ width: "18rem" }} bg="light">
+    <Card border="danger" bg="light">
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
         <Card.Title>Area: {location}</Card.Title>
