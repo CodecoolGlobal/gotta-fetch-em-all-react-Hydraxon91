@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
 
-
 function BattleMenu(props) {
   //console.log(fight);
 
@@ -33,7 +32,7 @@ function BattleMenu(props) {
       className={styles.background}
       style={{ backgroundImage: `url(${props.randomBG})` }}
     >
-      <Button variant="warning" onClick={() => GoBack()}>
+      <Button className="mt-5" variant="warning" onClick={() => GoBack()}>
         Go Back
       </Button>
       {/* <h1>This is the battle menu</h1> */}
@@ -53,13 +52,14 @@ function BattleMenu(props) {
           ></img>
 
           <>
-            <h2>
+            <h2 className="mt-5">
               {props.userPokemonData.name}'s HP: {attackerHP}
             </h2>
             <h2>
               {props.enemyPokemonData.name}'s HP: {defenderHP}
             </h2>
             <Button
+              className="mt-5"
               variant="danger"
               onClick={() => {
                 const updatedAttacker = {
