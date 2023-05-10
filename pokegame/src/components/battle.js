@@ -46,7 +46,7 @@ function BattleMenu(props) {
         className="mt-5"
         variant="danger"
         HP={Math.round(
-          (attackerHP * 100) / props.userPokemonData.stats[0].base_stat
+          (attackerHP * 100) / props.userPokemonData?.stats[0].base_stat
         )}
         label={props.userPokemonData?.name}
       ></HPBar>
@@ -54,7 +54,7 @@ function BattleMenu(props) {
         className="mt-5"
         variant="success"
         HP={Math.round(
-          (defenderHP * 100) / props.enemyPokemonData.stats[0].base_stat
+          (defenderHP * 100) / props.enemyPokemonData?.stats[0].base_stat
         )}
         label={props.enemyPokemonData?.name}
       ></HPBar>
