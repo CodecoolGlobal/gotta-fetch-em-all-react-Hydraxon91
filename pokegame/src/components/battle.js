@@ -17,6 +17,49 @@ function BattleMenu(props) {
     setBattleStart(true);
     console.log("teszt");
   }
+  function fighting() {
+    const updatedAttacker = {
+      ...props.userPokemonData, stats: [
+        {
+          ...props.userPokemonData.stats[0], base_stat: attackerHP,
+        },
+        ...props.userPokemonData.stats.slice(1),
+      ],
+    };
+    const updatedDefender = {
+      ...props.enemyPokemonData, stats: [
+        {
+          ...props.enemyPokemonData.stats[0],
+          base_stat: defenderHP,
+        },
+        ...props.enemyPokemonData.stats.slice(1),
+      ],
+    };
+    const result = fight(updatedAttacker, updatedDefender);
+    setAttackerHP(result.hpAttacker);
+    setDefenderHP(result.hpDefender);
+    if (result.winner === props.userPokemonData.name) {
+      let loserPokemon = props.enemyPokemonData;
+      let existingPokemon = props.usersPokemonArrData.find(pokemon => pokemon.name === loserPokemon.name);
+      if (existingPokemon) {
+        props.setUsersPokemonArrData(oldData => [...oldData.filter(pokemon => pokemon.name !== loserPokemon.name), loserPokemon]);
+      } else {
+        props.setUsersPokemonArrData(oldData => [...oldData, loserPokemon]);
+      }
+      /*props.setUsersPokemonArr((oldData) => [
+        ...oldData,
+        props.enemyPokemonData.name,
+      ]);*/
+      console.log("You win");
+      //console.log(props.usersPokemonArr);
+      GoBack();
+    } else if (
+      result.winner === props.enemyPokemonData.name
+    ) {
+      console.log("You lost");
+      GoBack();
+    }
+  }
   //Attacker = player, defender = enemy
   const [attackerHP, setAttackerHP] = useState(
     props.userPokemonData?.stats?.[0]?.base_stat || 0
@@ -122,52 +165,7 @@ function BattleMenu(props) {
                     style={{ width: "25%", margin: "auto" }}
                     variant="danger"
                     // style={{zIndex: '-2'}}
-                    onClick={() => {
-                      const updatedAttacker = {
-                        ...props.userPokemonData,
-                        stats: [
-                          {
-                            ...props.userPokemonData.stats[0],
-                            base_stat: attackerHP,
-                          },
-                          ...props.userPokemonData.stats.slice(1),
-                        ],
-                      };
-                      const updatedDefender = {
-                        ...props.enemyPokemonData,
-                        stats: [
-                          {
-                            ...props.enemyPokemonData.stats[0],
-                            base_stat: defenderHP,
-                          },
-                          ...props.enemyPokemonData.stats.slice(1),
-                        ],
-                      };
-                      const result = fight(updatedAttacker, updatedDefender);
-                      setAttackerHP(result.hpAttacker);
-                      setDefenderHP(result.hpDefender);
-                      if (result.winner === props.userPokemonData.name) {
-                        let loserPokemon = props.enemyPokemonData;
-                        let existingPokemon = props.usersPokemonArrData.find(pokemon => pokemon.name === loserPokemon.name);
-                        if(existingPokemon) {
-                          props.setUsersPokemonArrData(oldData => [...oldData.filter(pokemon => pokemon.name !== loserPokemon.name), loserPokemon]);
-                        } else {
-                          props.setUsersPokemonArrData(oldData => [...oldData, loserPokemon]);
-                        }
-                        /*props.setUsersPokemonArr((oldData) => [
-                          ...oldData,
-                          props.enemyPokemonData.name,
-                        ]);*/
-                        console.log("You win");
-                        //console.log(props.usersPokemonArr);
-                        GoBack();
-                      } else if (
-                        result.winner === props.enemyPokemonData.name
-                      ) {
-                        console.log("You lost");
-                        GoBack();
-                      }
-                    }}
+                    onClick={fighting}
                   >
                     Fight!
                   </Button>
