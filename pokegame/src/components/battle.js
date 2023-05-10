@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
+import Pokemon from "./PokemonCard";
 
 function BattleMenu(props) {
   //console.log(fight);
@@ -22,13 +23,12 @@ function BattleMenu(props) {
     if (props.userPokemonData) {
       setAttackerHP(props.userPokemonData.stats[0].base_stat);
     }
-    
   }, [props.userPokemonData]);
   useEffect(() => {
     if (props.enemyPokemonData) {
       setDefenderHP(props.enemyPokemonData.stats[0].base_stat);
     }
-  },[props.enemyPokemonData])
+  }, [props.enemyPokemonData]);
 
   return (
     <div
@@ -40,79 +40,98 @@ function BattleMenu(props) {
       </Button>
       {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
-        <div id ="battleParent">
-        <div>
-          <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
-          <img
-            src={props.enemyPokemonData.sprites.front_default}
-            text={props.enemyPokemonData.name}
-            className={styles.enemy}
-          ></img>
-          <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
-          <img
-            src={props.userPokemonData.sprites.back_default}
-            text={props.userPokemonData.name}
-            className={styles.player}
-          ></img>
+        <div id="battleParent">
+          <div>
+            <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
+            <img
+              src={props.enemyPokemonData.sprites.front_default}
+              text={props.enemyPokemonData.name}
+              className={styles.enemy}
+            ></img>
+            <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
+            <img
+              src={props.userPokemonData.sprites.back_default}
+              text={props.userPokemonData.name}
+              className={styles.player}
+            ></img>
 
+            <>
+              <h2 className="mt-5">
+                {props.userPokemonData.name}'s HP: {attackerHP}
+              </h2>
+              <h2>
+                {props.enemyPokemonData.name}'s HP: {defenderHP}
+              </h2>
+              <Button
+                className="mt-5"
+                variant="danger"
+                onClick={() => {
+                  const updatedAttacker = {
+                    ...props.userPokemonData,
+                    stats: [
+                      {
+                        ...props.userPokemonData.stats[0],
+                        base_stat: attackerHP,
+                      },
+                      ...props.userPokemonData.stats.slice(1),
+                    ],
+                  };
+                  const updatedDefender = {
+                    ...props.enemyPokemonData,
+                    stats: [
+                      {
+                        ...props.enemyPokemonData.stats[0],
+                        base_stat: defenderHP,
+                      },
+                      ...props.enemyPokemonData.stats.slice(1),
+                    ],
+                  };
+                  const result = fight(updatedAttacker, updatedDefender);
+                  setAttackerHP(result.hpAttacker);
+                  setDefenderHP(result.hpDefender);
+                  if (result.winner === props.userPokemonData.name) {
+                    props.setUsersPokemonArr((oldData) => [
+                      ...oldData,
+                      props.enemyPokemonData.name,
+                    ]);
+                    console.log("You win");
+                    //console.log(props.usersPokemonArr);
+                    GoBack();
+                  } else if (result.winner === props.enemyPokemonData.name) {
+                    console.log("You lost");
+                    GoBack();
+                  }
+                }}
+              >
+                Fight!
+              </Button>
+            </>
+          </div>
+          {/* <div style={{ position: "fixed", top: "50%" }}>
+            {props.usersPokemonArr.map((e) => (
+              <button
+                onClick={() => {
+                  props.setUserPokemon(e);
+                }}
+              >
+                {e}
+              </button>
+            ))}
+          </div> */}
           <>
-            <h2 className="mt-5">
-              {props.userPokemonData.name}'s HP: {attackerHP}
-            </h2>
-            <h2>
-              {props.enemyPokemonData.name}'s HP: {defenderHP}
-            </h2>
-            <Button
-              className="mt-5"
-              variant="danger"
-              onClick={() => {
-                const updatedAttacker = {
-                  ...props.userPokemonData,
-                  stats: [
-                    {
-                      ...props.userPokemonData.stats[0],
-                      base_stat: attackerHP,
-                    },
-                    ...props.userPokemonData.stats.slice(1),
-                  ],
-                };
-                const updatedDefender = {
-                  ...props.enemyPokemonData,
-                  stats: [
-                    {
-                      ...props.enemyPokemonData.stats[0],
-                      base_stat: defenderHP,
-                    },
-                    ...props.enemyPokemonData.stats.slice(1),
-                  ],
-                };
-                const result = fight(updatedAttacker, updatedDefender);
-                setAttackerHP(result.hpAttacker);
-                setDefenderHP(result.hpDefender);
-                if (result.winner === props.userPokemonData.name) {
-                  props.setUsersPokemonArr((oldData) => [
-                    ...oldData,
-                    props.enemyPokemonData.name,
-                  ]);
-                  console.log("You win");
-                  //console.log(props.usersPokemonArr);
-                  GoBack();
-                } else if (result.winner === props.enemyPokemonData.name) {
-                  console.log("You lost");
-                  GoBack();
-                }
-              }}
-            >
-              Fight!
-            </Button>
-          
+            <div class="row mt-5">
+              {props.usersPokemonArr.map((pokemon) => (
+                <div class="col-md-4 mt-5">
+                  <Pokemon
+                    name={pokemon}
+                    onClick={(pokemon) => {
+                      props.setUserPokemon(pokemon);
+                    }}
+                  ></Pokemon>
+                </div>
+              ))}
+            </div>
           </>
-        </div>
-        <div style={{position:'fixed', top: '50%'}}>
-        {props.usersPokemonArr.map((e)=>(
-            <button onClick={()=>{props.setUserPokemon(e)}}>{e}</button>
-          ))}
-        </div>
         </div>
       ) : (
         <h2>Loading players, if there in no enemy, go back</h2>
