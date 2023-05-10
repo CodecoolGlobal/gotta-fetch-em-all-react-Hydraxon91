@@ -42,8 +42,22 @@ function BattleMenu(props) {
       className={styles.background}
       style={{ backgroundImage: `url(${props.randomBG})` }}
     >
-      <HPBar variant="danger" HP={attackerHP}></HPBar>
-      <HPBar variant="success" HP={defenderHP}></HPBar>
+      <HPBar
+        className="mt-5"
+        variant="danger"
+        HP={Math.round(
+          (attackerHP * 100) / props.userPokemonData.stats[0].base_stat
+        )}
+        label={props.userPokemonData?.name}
+      ></HPBar>
+      <HPBar
+        className="mt-5"
+        variant="success"
+        HP={Math.round(
+          (defenderHP * 100) / props.enemyPokemonData.stats[0].base_stat
+        )}
+        label={props.enemyPokemonData?.name}
+      ></HPBar>
 
       <Button
         className="mt-5"
@@ -77,63 +91,8 @@ function BattleMenu(props) {
               <h2>
                 {props.enemyPokemonData.name}'s HP: {defenderHP}
               </h2>
-              {/* <Button
-                className="mt-5"
-                variant="danger"
-                // style={{zIndex: '-2'}}
-                onClick={() => {
-                  const updatedAttacker = {
-                    ...props.userPokemonData,
-                    stats: [
-                      {
-                        ...props.userPokemonData.stats[0],
-                        base_stat: attackerHP,
-                      },
-                      ...props.userPokemonData.stats.slice(1),
-                    ],
-                  };
-                  const updatedDefender = {
-                    ...props.enemyPokemonData,
-                    stats: [
-                      {
-                        ...props.enemyPokemonData.stats[0],
-                        base_stat: defenderHP,
-                      },
-                      ...props.enemyPokemonData.stats.slice(1),
-                    ],
-                  };
-                  const result = fight(updatedAttacker, updatedDefender);
-                  setAttackerHP(result.hpAttacker);
-                  setDefenderHP(result.hpDefender);
-                  if (result.winner === props.userPokemonData.name) {
-                    props.setUsersPokemonArr((oldData) => [
-                      ...oldData,
-                      props.enemyPokemonData.name,
-                    ]);
-                    console.log("You win");
-                    //console.log(props.usersPokemonArr);
-                    GoBack();
-                  } else if (result.winner === props.enemyPokemonData.name) {
-                    console.log("You lost");
-                    GoBack();
-                  }
-                }}
-              >
-                Fight!
-              </Button> */}
             </>
           </div>
-          {/* <div style={{ position: "fixed", top: "50%" }}>
-            {props.usersPokemonArr.map((e) => (
-              <button
-                onClick={() => {
-                  props.setUserPokemon(e);
-                }}
-              >
-                {e}
-              </button>
-            ))}
-          </div> */}
           <>
             <div
               className="row mt-5"
