@@ -175,6 +175,7 @@ function BattleMenu(props) {
                       attack={pokemon.data.stats[1].base_stat}
                       defense={pokemon.data.stats[2].base_stat}
                       sprite={pokemon.data.sprites.front_default}
+                      text="Choose pokemon!"
                       // onClick={() => {
                       //   props.setUserPokemon(pokemon);
                       //   console.log("teszt");
@@ -209,7 +210,6 @@ function BattleMenu(props) {
                     onClick={() => {
                       GoBack();
                     }}
-                    style={{ zIndex: "-1", width: "10%" }}
                   >
                     Flee!
                   </Button>
@@ -220,13 +220,12 @@ function BattleMenu(props) {
         </div>
       ) : (
         <div style={{ display: "block" }}>
-          <h2>Loading players, if there in no enemy, go back</h2>
-          {/* <SpinnerAnim style={{margin:"auto"}}/> */}
+          {/* <h2>Loading players, if there in no enemy, go back</h2> */}
+          <SpinnerAnim style={{ margin: "auto" }} />
           <Button
             className="mt-5"
             variant="success"
             onClick={() => GoBack()}
-            // style={{ zIndex: "-1", width: "10%" }}
             size="lg"
           >
             Go back!
