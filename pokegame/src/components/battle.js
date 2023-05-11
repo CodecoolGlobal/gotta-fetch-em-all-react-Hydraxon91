@@ -42,7 +42,7 @@ function BattleMenu(props) {
         ...props.enemyPokemonData.stats.slice(1),
       ],
     };
-    const result = fight(updatedAttacker, updatedDefender, props.setUserPokemonData, props.userPokemonData);
+    const result = fight(updatedAttacker, updatedDefender);
     setAttackerHP(result.hpAttacker);
     setDefenderHP(result.hpDefender);
     updatePokemonHealth();
