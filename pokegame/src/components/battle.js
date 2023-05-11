@@ -73,7 +73,7 @@ function BattleMenu(props) {
   const [defenderHP, setDefenderHP] = useState(
     props.enemyPokemonData?.stats?.[0]?.base_stat || 0
   );
-  const [battleStart, setBattleStart] = useState(false);
+  const [battleStart, setBattleStart] = useState(true);
 
   useEffect(() => {
     if (props.userPokemonData) {
@@ -89,7 +89,7 @@ function BattleMenu(props) {
   return (
     <div
       className={styles.background}
-      style={{ backgroundImage: `url(${props.randomBG})` }}
+      style={{ backgroundImage: `url(${props.randomBG})`, margin:"auto"}}
     >
       <HPBar
         className="mt-5"
@@ -133,6 +133,8 @@ function BattleMenu(props) {
               className={styles.player}
             ></img>
 
+            <div className={styles.playerDiv}>
+              <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
             <>
               <h2 className="mt-5">
                 {props.userPokemonData.name}'s HP: {attackerHP}
@@ -168,7 +170,7 @@ function BattleMenu(props) {
                 <div>
                   <Button
                     className="mt-5"
-                    style={{ width: "25%", margin: "auto" }}
+                    style={{ width: "25%", margin: "auto"}}
                     variant="danger"
                     // style={{zIndex: '-2'}}
                     onClick={fighting}
@@ -177,7 +179,7 @@ function BattleMenu(props) {
                   </Button>
                   <Button
                     className="mt-5"
-                    style={{ width: "25%", margin: "auto" }}
+                    style={{ width: "25%", margin: "auto"}}
                     variant="danger"
                     onClick={() => {
                       setBattleStart(false);
