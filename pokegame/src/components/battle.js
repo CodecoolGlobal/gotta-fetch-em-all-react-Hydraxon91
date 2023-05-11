@@ -4,9 +4,12 @@ import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
 import Pokemon from "./PokemonCard";
 import HPBar from "./HPBar";
+import EndFight from "./EndFight";
 
 function BattleMenu(props) {
   //console.log(fight);
+  const [showEndFight, setShowEndFight] = useState(false);
+  const [result, setResult] = useState(null);
 
   function GoBack() {
     props.setBattleState(false);
@@ -36,6 +39,7 @@ function BattleMenu(props) {
       ],
     };
     const result = fight(updatedAttacker, updatedDefender);
+    setResult(result);
     setAttackerHP(result.hpAttacker);
     setDefenderHP(result.hpDefender);
     if (result.winner === props.userPokemonData.name) {
@@ -51,13 +55,15 @@ function BattleMenu(props) {
         props.enemyPokemonData.name,
       ]);*/
       console.log("You win");
+      setShowEndFight(true)
       //console.log(props.usersPokemonArr);
-      GoBack();
+      //GoBack();
     } else if (
       result.winner === props.enemyPokemonData.name
     ) {
       console.log("You lost");
-      GoBack();
+      setShowEndFight(true);
+      //GoBack();
     }
   }
   //Attacker = player, defender = enemy
@@ -81,10 +87,17 @@ function BattleMenu(props) {
   }, [props.enemyPokemonData]);
 
   return (
-    <div
+    <div>
+    {showEndFight ? (
+      <EndFight
+      winner={result.winner}
+      loser={result.winner === props.userPokemonData.name ? props.enemyPokemonData.name : props.userPokemonData.name}
+      goBack={GoBack}
+      winnerPokemonData={result.winner === props.userPokemonData.name ? props.enemyPokemonData : props.userPokemonData}/>
+      ) : (
+      <div
       className={styles.background}
-      style={{ backgroundImage: `url(${props.randomBG})` }}
-    >
+      style={{ backgroundImage: `url(${props.randomBG})` }}>
       <HPBar
         className="mt-5"
         variant="danger"
@@ -188,7 +201,8 @@ function BattleMenu(props) {
         <h2>Loading players, if there in no enemy, go back</h2>
       )}
     </div>
-  );
+  )}
+  </div>)
 }
 
 export default BattleMenu;
