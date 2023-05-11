@@ -15,13 +15,7 @@ function BattleMenu(props) {
     // props.setEnemyPokemonData();
   }
 
-  function updatePokemonHealth() {
-    let data = props.userPokemonData;
-    props.userPokemonData.currHP = attackerHP;
-    props.setUserPokemonData(data);
-  }
   function changePokemon(pokemon) {
-    updatePokemonHealth();
     props.setUserPokemon(pokemon);
     setBattleStart(true);
     //console.log("teszt");
@@ -41,7 +35,12 @@ function BattleMenu(props) {
         ...props.enemyPokemonData.stats.slice(1),
       ],
     };
-    const result = fight(updatedAttacker, updatedDefender);
+    const result = fight(
+      updatedAttacker,
+      updatedDefender,
+      props.setUserPokemonData,
+      props.userPokemonData
+    );
     setAttackerHP(result.hpAttacker);
     setDefenderHP(result.hpDefender);
     if (result.winner === props.userPokemonData.data.name) {
@@ -76,11 +75,9 @@ function BattleMenu(props) {
       ]);*/
       console.log("You win");
       //console.log(props.usersPokemonArr);
-      updatePokemonHealth();
       GoBack();
     } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
-      updatePokemonHealth();
       GoBack();
     }
   }
@@ -201,7 +198,6 @@ function BattleMenu(props) {
                     size="lg"
                     variant="warning"
                     onClick={() => {
-                      updatePokemonHealth();
                       setBattleStart(false);
                     }}
                   >
@@ -212,8 +208,8 @@ function BattleMenu(props) {
                     variant="success"
                     onClick={() => {
                       GoBack();
-                      updatePokemonHealth();
                     }}
+                    style={{ zIndex: "-1", width: "10%" }}
                   >
                     Flee!
                   </Button>
