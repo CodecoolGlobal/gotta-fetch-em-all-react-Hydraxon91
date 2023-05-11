@@ -126,15 +126,14 @@ function BattleMenu(props) {
               alt={props.enemyPokemonData.name}
               className={styles.enemy}
             ></img>
-            <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
-            <img
-              src={props.userPokemonData.sprites.back_default}
-              alt={props.userPokemonData.name}
-              className={styles.player}
-            ></img>
-
             <div className={styles.playerDiv}>
               <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
+              <img
+                src={props.userPokemonData.sprites.back_default}
+                alt={props.userPokemonData.name}
+                className={styles.player}
+              ></img>
+            </div>
             <>
               <h2 className="mt-5">
                 {props.userPokemonData.name}'s HP: {attackerHP}
