@@ -204,10 +204,19 @@ function BattleMenu(props) {
           </>
         </div>
       ) : (
-        <>
+        <div style={{display:"block"}}>
           <h2>Loading players, if there in no enemy, go back</h2>
-          <SpinnerAnim />
-        </>
+          {/* <SpinnerAnim style={{margin:"auto"}}/> */}
+          <Button
+                    className="mt-5"
+                    variant="success"
+                    onClick={() => GoBack()}
+                    style={{ zIndex: "-1", width: "10%" }}
+                  >
+                    Go back!
+          </Button>
+        </div>
+        
       )}
     </div>
   );
