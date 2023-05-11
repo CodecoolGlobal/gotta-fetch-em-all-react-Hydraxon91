@@ -140,6 +140,7 @@ function BattleMenu(props) {
               : props.userPokemonData.data
           }
           goBack={GoBack}
+          text="Go back, and select another area!"
           // winnerPokemonData={result.winner === props.userPokemonData.name ? props.enemyPokemonData : props.userPokemonData}
         />
       ) : (
