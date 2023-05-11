@@ -15,3 +15,11 @@ h2 {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: yellow;
 }
+
+.hpbar {
+  background-color: rgba(0, 0, 0, 0) !important;
+  height: 2em !important;
+  font-size: 1em !important;
+  font-weight: 600;
+  text-transform: capitalize;
+}
