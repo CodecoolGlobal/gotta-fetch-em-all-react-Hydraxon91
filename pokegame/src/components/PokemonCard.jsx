@@ -8,7 +8,8 @@ export default function Pokemon(props) {
     const attack = props.attack
     const defense = props.defense
     const sprite = props.sprite
-    const handleClick = props.handleClick
+  const handleClick = props.handleClick
+  const text = props.text
     
 
    
@@ -20,7 +21,7 @@ export default function Pokemon(props) {
         <Card.Text>Health: {currHP}/{maxHp}</Card.Text>
         <Card.Text>Attack: {attack} </Card.Text>
         <Card.Text>Defense: {defense}</Card.Text>
-        <Button variant="danger" onClick={() => handleClick(name)}>Choose pokemon!</Button>
+          <Button variant="danger" onClick={() => handleClick(name)}>{text }</Button>
       </Card.Body>
     </Card>
   );
