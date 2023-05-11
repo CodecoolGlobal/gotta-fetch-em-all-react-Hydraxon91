@@ -41,21 +41,29 @@ function App() {
     //     setUserPokemonData(data)
     //   })) 
     // : console.log("User pokemon is undefined");
-    let pepe = usersPokemonArrData.find(e =>{return e.name===userPokemon});
-    //console.log("pepe is ",pepe);
+    let pepe = usersPokemonArrData.find(e =>{return e.data.name===userPokemon});
+    console.log("pepe is ",pepe);
     setUserPokemonData(pepe);
   },[userPokemon, usersPokemonArrData])
 
 
   //Fetching all the pokemons in the UsersPokemonArr
   useEffect(()=>{
-    Promise.all(usersPokemonArr.map((e)=>{
+    Promise.all(usersPokemonArr.map((e, index)=>{
       fetch(`${pokeApi}${e}`).then(res=>res.json().then(data=>{
-        setUsersPokemonArrData(oldData => [...oldData, data]);
+        console.log(usersPokemonArrData.length);
+        let usersPokemon = {
+          id: index+1,
+          data: data,
+          currHP: data.stats[0].base_stat
+        }
+        setUsersPokemonArrData(oldData => [...oldData, usersPokemon]);
+        //console.log("fetched ", data.name);
       }))
     }))
-  }, [usersPokemonArr])
-  //console.log(usersPokemonArrData);
+  }, [])
+  usersPokemonArrData.sort((a,b)=>a.id-b.id)
+  console.log(usersPokemonArrData);
 
   //Fetches the first 20 locations
   useEffect(() => {
@@ -92,7 +100,7 @@ function App() {
 
     //Fetches the enemypokemondata whenever the enemypokemon changes
     useEffect(()=> {
-      console.log(enemyPokemon);
+      //console.log(enemyPokemon);
         if(enemyPokemon != undefined){
           fetch(`https://pokeapi.co/api/v2/pokemon/${enemyPokemon}`)
           .then(res => res.json()
