@@ -172,17 +172,16 @@ function BattleMenu(props) {
               ) : (
                 <div style={{ marginTop: "10%" }}>
                   <Button
-                    className="mt-5"
-                    style={{ width: "25%", margin: "auto" }}
+                    className="mt-5 mx-1"
+                    size="lg"
                     variant="danger"
-                    // style={{zIndex: '-2'}}
                     onClick={fighting}
                   >
                     Fight!
                   </Button>
                   <Button
-                    className="mt-5"
-                    style={{ width: "25%", margin: "auto" }}
+                    className="mt-5 mx-1"
+                    size="lg"
                     variant="warning"
                     onClick={() => {
                       setBattleStart(false);
@@ -191,10 +190,10 @@ function BattleMenu(props) {
                     Change Pokemon
                   </Button>
                   <Button
-                    className="mt-5"
+                    className="mt-5 mx-1"
                     variant="success"
                     onClick={() => GoBack()}
-                    style={{ zIndex: "-1", width: "10%" }}
+                    size="lg"
                   >
                     Flee!
                   </Button>
@@ -204,19 +203,19 @@ function BattleMenu(props) {
           </>
         </div>
       ) : (
-        <div style={{display:"block"}}>
+        <div style={{ display: "block" }}>
           <h2>Loading players, if there in no enemy, go back</h2>
           {/* <SpinnerAnim style={{margin:"auto"}}/> */}
           <Button
-                    className="mt-5"
-                    variant="success"
-                    onClick={() => GoBack()}
-                    style={{ zIndex: "-1", width: "10%" }}
-                  >
-                    Go back!
+            className="mt-5"
+            variant="success"
+            onClick={() => GoBack()}
+            // style={{ zIndex: "-1", width: "10%" }}
+            size="lg"
+          >
+            Go back!
           </Button>
         </div>
-        
       )}
     </div>
   );
