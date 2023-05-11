@@ -21,7 +21,7 @@ function BattleMenu(props) {
     props.setEnemyPokemon();
     // props.setEnemyPokemonData();
   }
-
+  //console.log("props.userPokemonData ", props.userPokemonData);
   function updatePokemonHealth(hp) {
     let data = props.userPokemonData;
     data.currHP = hp;
@@ -174,7 +174,7 @@ function BattleMenu(props) {
                     {props.enemyPokemonData.name}
                   </h2>
                   <img
-                    src={props.enemyPokemonData.sprites.front_default}
+                    src={props.enemyPokemonData.sprites.versions["generation-v"]["black-white"]["animated"].front_default}
                     alt={props.enemyPokemonData.name}
                     className={styles.enemy}
                   ></img>
@@ -183,7 +183,7 @@ function BattleMenu(props) {
                       {props.userPokemonData.data.name}
                     </h2>
                     <img
-                      src={props.userPokemonData.data.sprites.back_default}
+                      src={props.userPokemonData.data.sprites.versions["generation-v"]["black-white"]["animated"]["back_default"]}
                       alt={props.userPokemonData.data.name}
                       className={styles.player}
                     ></img>

@@ -8,8 +8,8 @@ const locationApi = "https://pokeapi.co/api/v2/location/";
 const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
 
 const starterPokemonArr = [
-  `bulbasaur`,
   `charizard`,
+  `bulbasaur`,
   `poliwhirl`
 ]
 

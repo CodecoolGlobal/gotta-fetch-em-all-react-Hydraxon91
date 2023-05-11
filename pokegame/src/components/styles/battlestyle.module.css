@@ -18,7 +18,7 @@
     position: absolute;
     display: flex;
     width: 300px;
-    bottom:22%;
+    bottom:28%;
     left:10%;
     z-index: -2;
 }
@@ -36,9 +36,9 @@
 .enemy{
     position: absolute;
     display: flex;
-    width: 350px; 
-    bottom:44%;
-    left:55%;
+    width: 250px; 
+    bottom:52%;
+    left:60%;
     z-index: -2;
 }
 .enemyName{
