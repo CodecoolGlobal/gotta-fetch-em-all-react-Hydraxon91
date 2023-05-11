@@ -4,6 +4,7 @@ import styles from "./styles/battlestyle.module.css";
 import fight from "../fight";
 import Pokemon from "./PokemonCard";
 import HPBar from "./HPBar";
+import SpinnerAnim from "./Spinner";
 
 function BattleMenu(props) {
   //console.log(fight);
@@ -191,7 +192,10 @@ function BattleMenu(props) {
           </>
         </div>
       ) : (
-        <h2>Loading players, if there in no enemy, go back</h2>
+        <>
+          <h2>Loading players, if there in no enemy, go back</h2>
+          <SpinnerAnim />
+        </>
       )}
     </div>
   );
