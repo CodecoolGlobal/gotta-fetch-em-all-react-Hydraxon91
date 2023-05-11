@@ -3,13 +3,15 @@ import { Button } from "react-bootstrap";
 import Pokemon from "./PokemonCard";
 
 function EndFight(props) {
-  const { winner, loser, wonBattle, text, goBack } = props;
+  const { winner, loser, wonBattle, goBack } = props;
 
   return (
     <div>
       <h2>Winner: {winner}</h2>
       <h2>Loser: {loser.name}</h2>
-      <h3>You have one new Pokemon!</h3>
+      <br></br>
+      <br></br>
+      <h2>You have one new Pokemon!</h2>
       {wonBattle ? (
         <div className="row" style={{ justifyContent: "center" }}>
           <div className="col-md-4 mt-5">
