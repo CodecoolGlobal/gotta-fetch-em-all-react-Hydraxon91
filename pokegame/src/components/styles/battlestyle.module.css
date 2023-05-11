@@ -52,5 +52,6 @@
 }
 .hpDiv{
     margin-right: 66%;
+    width: fit-content;
     /* color: antiquewhite; */
 }

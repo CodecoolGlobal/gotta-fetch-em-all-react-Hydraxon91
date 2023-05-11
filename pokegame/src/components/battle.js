@@ -12,9 +12,12 @@ function BattleMenu(props) {
   //console.log("props.userpokemondata ", props.userPokemonData);
   const [showEndFight, setShowEndFight] = useState(false);
   const [result, setResult] = useState(null);
+  const [wonBattle, setWonBattle] = useState(false);
 
   function GoBack() {
+    setWonBattle(false);
     props.setBattleState(false);
+    setShowEndFight(false)
     props.setEnemyPokemon();
     // props.setEnemyPokemonData();
   }
@@ -54,6 +57,8 @@ function BattleMenu(props) {
     setDefenderHP(result.hpDefender);
     updatePokemonHealth();
     if (result.winner === props.userPokemonData.data.name) {
+      setWonBattle(true);
+
       let loserPokemon = props.enemyPokemonData;
       let newPokemon = {
         id:
@@ -87,7 +92,7 @@ function BattleMenu(props) {
       setShowEndFight(true)
       //console.log(props.usersPokemonArr);
       updatePokemonHealth();
-      GoBack();
+      //GoBack();
     } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
       setShowEndFight(true);
@@ -115,15 +120,19 @@ function BattleMenu(props) {
       setDefenderHP(props.enemyPokemonData.stats[0].base_stat);
     }
   }, [props.enemyPokemonData]);
-
+console.log(props.enemyPokemonData);
   return (
     <div>
     {showEndFight ? (
+    
       <EndFight
-      winner={result.winner}
-      loser={result.winner === props.userPokemonData.name ? props.enemyPokemonData.name : props.userPokemonData.name}
-      goBack={GoBack}
-      winnerPokemonData={result.winner === props.userPokemonData.name ? props.enemyPokemonData : props.userPokemonData}/>
+        wonBattle = {wonBattle}
+        winner={result.winner}
+        loser={result.winner !== props.enemyPokemonData.name? props.enemyPokemonData : props.userPokemonData.data}
+        goBack={GoBack}
+        // winnerPokemonData={result.winner === props.userPokemonData.name ? props.enemyPokemonData : props.userPokemonData}
+      /> 
+      
       ) : (
       <div
       className={styles.background}

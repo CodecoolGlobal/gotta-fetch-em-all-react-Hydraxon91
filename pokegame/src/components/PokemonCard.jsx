@@ -8,8 +8,8 @@ export default function Pokemon(props) {
     const attack = props.attack
     const defense = props.defense
     const sprite = props.sprite
-  const handleClick = props.handleClick
-  const text = props.text
+    const handleClick = props.handleClick
+    const text = props.text
     
 
    
