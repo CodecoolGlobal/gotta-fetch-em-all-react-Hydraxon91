@@ -22,14 +22,14 @@ function BattleMenu(props) {
     // props.setEnemyPokemonData();
   }
 
-  function updatePokemonHealth() {
+  function updatePokemonHealth(hp) {
     let data = props.userPokemonData;
-    data.currHP = attackerHP;
+    data.currHP = hp;
     console.log("data is ", data);
     props.setUserPokemonData(data);
   }
   function changePokemon(pokemon) {
-    updatePokemonHealth();
+    updatePokemonHealth(attackerHP);
     props.setUserPokemon(pokemon);
     setBattleStart(true);
     //console.log("teszt");
@@ -55,7 +55,7 @@ function BattleMenu(props) {
 
     setAttackerHP(result.hpAttacker);
     setDefenderHP(result.hpDefender);
-    updatePokemonHealth();
+    updatePokemonHealth(attackerHP);
     if (result.winner === props.userPokemonData.data.name) {
       setWonBattle(true);
 
@@ -91,12 +91,12 @@ function BattleMenu(props) {
       console.log("You win");
       setShowEndFight(true)
       //console.log(props.usersPokemonArr);
-      updatePokemonHealth();
+      updatePokemonHealth(attackerHP);
       //GoBack();
     } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
       setShowEndFight(true);
-      updatePokemonHealth();
+      updatePokemonHealth(attackerHP);
       //GoBack();
 
     }
@@ -122,7 +122,7 @@ function BattleMenu(props) {
   }, [props.enemyPokemonData]);
 console.log(props.enemyPokemonData);
   return (
-    <div>
+    <div id="test" style={{height: "100%", width:"100%", justifyContent:"center"}}>
     {showEndFight ? (
     
       <EndFight
@@ -136,7 +136,7 @@ console.log(props.enemyPokemonData);
       ) : (
       <div
       className={styles.background}
-      style={{ backgroundImage: `url(${props.randomBG})`, margin: "auto" }}
+      style={{ backgroundImage: `url(${props.randomBG})` }}
     >
       <HPBar
         className="mt-5"
@@ -155,15 +155,6 @@ console.log(props.enemyPokemonData);
         label={props.enemyPokemonData?.name}
       ></HPBar>
 
-      {/* <Button
-        className="mt-5"
-        variant="warning"
-        onClick={() => GoBack()}
-        style={{ zIndex: "-1" }}
-      >
-        Go Back
-      </Button> */}
-      {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
         <div id="battleParent" style={{ height: "100%" }}>
           <div>
@@ -208,10 +199,6 @@ console.log(props.enemyPokemonData);
                       defense={pokemon.data.stats[2].base_stat}
                       sprite={pokemon.data.sprites.front_default}
                       text="Choose pokemon!"
-                      // onClick={() => {
-                      //   props.setUserPokemon(pokemon);
-                      //   console.log("teszt");
-                      // }}
                       handleClick={changePokemon}
                     ></Pokemon>
                   </div>
@@ -231,7 +218,7 @@ console.log(props.enemyPokemonData);
                     size="lg"
                     variant="warning"
                     onClick={() => {
-                      updatePokemonHealth();
+                      updatePokemonHealth(attackerHP);
                       setBattleStart(false);
                     }}
                   >
@@ -243,7 +230,7 @@ console.log(props.enemyPokemonData);
                     variant="success"
                     onClick={() => {
                       GoBack();
-                      updatePokemonHealth();
+                      updatePokemonHealth(attackerHP);
                     }}
                   >
                     Flee!
