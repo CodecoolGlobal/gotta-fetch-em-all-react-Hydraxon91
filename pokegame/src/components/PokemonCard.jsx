@@ -14,7 +14,7 @@ export default function Pokemon(props) {
 
    
     return (
-    <Card border="danger" bg="warning" className="card mt-5 mb-1">
+    <Card border="danger" bg="warning" className="card mb-1">
       <Card.Img variant="top" src={sprite} style={{width:"50%", margin: "auto"}}/>
       <Card.Body>
         <Card.Title>Pokemon name: {name}</Card.Title>  

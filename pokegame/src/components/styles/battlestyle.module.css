@@ -55,3 +55,9 @@
     width: fit-content;
     /* color: antiquewhite; */
 }
+
+.scrollBar ::-webkit-scrollbar{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: none;
+}

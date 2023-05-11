@@ -168,7 +168,7 @@ function BattleMenu(props) {
             ></HPBar>
 
             {props.enemyPokemonData ? (
-              <div id="battleParent" style={{ height: "100%" }}>
+              <div id="battleParent" style={{ height: "150%", overflow:"hidden" }}className={styles.scrollBar}>
                 <div>
                   <h2 className={styles.enemyName}>
                     {props.enemyPokemonData.name}
@@ -200,11 +200,11 @@ function BattleMenu(props) {
                 <>
                   <div
                     className="row mt-5"
-                    style={{ position: "relative", top: "35%" }}
+                    style={{ position: "relative", top: "32%", overflowY:"scroll", height:"36%", scrollbarWidth:"none" }}
                   >
                     {!battleStart ? (
                       props.usersPokemonArrData.map((pokemon, index) => (
-                        <div className="col-md-4 mt-5" key={index}>
+                        <div className="col-md-4 mt-1 mb-3" key={index}>
                           <Pokemon
                             name={pokemon.data.name}
                             hp={pokemon.data.stats[0].base_stat}
@@ -218,7 +218,7 @@ function BattleMenu(props) {
                         </div>
                       ))
                     ) : (
-                      <div style={{ marginTop: "10%" }}>
+                      <div style={{ marginTop: "0%" }}>
                         <Button
                           className="mt-5 mx-1"
                           size="lg"
