@@ -12,11 +12,12 @@ function BattleMenu(props) {
   function GoBack() {
     props.setBattleState(false);
     props.setEnemyPokemon();
+    // props.setEnemyPokemonData();
   }
   function changePokemon(pokemon) {
     props.setUserPokemon(pokemon);
     setBattleStart(true);
-    console.log("teszt");
+    //console.log("teszt");
   }
   function fighting() {
     const updatedAttacker = {
@@ -109,14 +110,14 @@ function BattleMenu(props) {
         label={props.enemyPokemonData?.name}
       ></HPBar>
 
-      <Button
+      {/* <Button
         className="mt-5"
         variant="warning"
         onClick={() => GoBack()}
         style={{ zIndex: "-1" }}
       >
         Go Back
-      </Button>
+      </Button> */}
       {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
         <div id="battleParent" style={{ height: "100%" }}>
@@ -152,6 +153,7 @@ function BattleMenu(props) {
               style={{ position: "relative", top: "35%" }}
             >
               {!battleStart ? (
+                
                 props.usersPokemonArrData.map((pokemon, index) => (
                   <div className="col-md-4 mt-5" key={index}>
                     <Pokemon
@@ -168,8 +170,9 @@ function BattleMenu(props) {
                     ></Pokemon>
                   </div>
                 ))
+                
               ) : (
-                <div>
+                <div style={{marginTop: '10%'}}>
                   <Button
                     className="mt-5"
                     style={{ width: "25%", margin: "auto" }}
@@ -188,6 +191,14 @@ function BattleMenu(props) {
                     }}
                   >
                     Change Pokemon
+                  </Button>
+                  <Button
+                      className="mt-5"
+                      variant="warning"
+                      onClick={() => GoBack()}
+                      style={{ zIndex: "-1", width:"10%" }}
+                    >
+                    Flee
                   </Button>
                 </div>
               )}

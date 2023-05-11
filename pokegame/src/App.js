@@ -42,7 +42,7 @@ function App() {
     //   })) 
     // : console.log("User pokemon is undefined");
     let pepe = usersPokemonArrData.find(e =>{return e.name===userPokemon});
-    console.log("pepe is ",pepe);
+    //console.log("pepe is ",pepe);
     setUserPokemonData(pepe);
   },[userPokemon, usersPokemonArrData])
 
@@ -55,7 +55,7 @@ function App() {
       }))
     }))
   }, [usersPokemonArr])
-  console.log(usersPokemonArrData);
+  //console.log(usersPokemonArrData);
 
   //Fetches the first 20 locations
   useEffect(() => {
@@ -92,13 +92,14 @@ function App() {
 
     //Fetches the enemypokemondata whenever the enemypokemon changes
     useEffect(()=> {
+      console.log(enemyPokemon);
         if(enemyPokemon != undefined){
-        fetch(`https://pokeapi.co/api/v2/pokemon/${enemyPokemon}`)
-        .then(res => res.json()
-        .then(data => {
-            setEnemyPokemonData(data)
-        }))
-    }
+          fetch(`https://pokeapi.co/api/v2/pokemon/${enemyPokemon}`)
+          .then(res => res.json()
+          .then(data => {
+              setEnemyPokemonData(data)
+          }))
+      } else(setEnemyPokemonData());
     }, [enemyPokemon])
 
     //console.log(" enemy pokemon ", enemyPokemonData);
