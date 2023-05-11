@@ -24,6 +24,7 @@ function App() {
   const [enemyPokemon, setEnemyPokemon] = useState();
   const [enemyPokemonData, setEnemyPokemonData] = useState();
   const [IntroPlayed, SetIntroPlayed] = useState(false);
+  const [playerCoins, setPlayerCoins] = useState(10);
 
   
   // const randomBG = bgs[Math.floor(Math.random() * 11)];
@@ -121,13 +122,15 @@ function App() {
             <MainPage 
             locationAreaData={locationAreaData} setBattleState = {setInBattle} 
             setEnemyPokemon={setEnemyPokemon} SetIntroPlayed={SetIntroPlayed}
-            IntroPlayed={IntroPlayed}></MainPage>
+            IntroPlayed={IntroPlayed} playerCoins={playerCoins} setPlayerCoins={setPlayerCoins}
+            usersPokemonArrData = {usersPokemonArrData}
+            ></MainPage>
           :
             <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} 
             userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} 
             usersPokemonArr={usersPokemonArr} setEnemyPokemon={setEnemyPokemon} setUsersPokemonArrData={setUsersPokemonArrData} setUsersPokemonArr={setUsersPokemonArr} 
             randomBG={randomBG} setUserPokemon={setUserPokemon} userPokemon={userPokemon}
-            usersPokemonArrData={usersPokemonArrData}></BattleMenu>
+            usersPokemonArrData={usersPokemonArrData} setPlayerCoins={setPlayerCoins}> </BattleMenu>
         : <h2>Loading data</h2>
       }
     </div>

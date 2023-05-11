@@ -63,7 +63,7 @@ function BattleMenu(props) {
     updatePokemonHealth(attackerHP);
     if (result.winner === props.userPokemonData.data.name) {
       setWonBattle(true);
-
+      props.setPlayerCoins((oldData)=>oldData+10)
       let loserPokemon = props.enemyPokemonData;
       let newPokemon = {
         id:

@@ -26,7 +26,20 @@ function EndFight(props) {
           </div>
         </div>
       ) : (
-        <h2>You lost! :( 😭</h2>
+        <div>
+            <h2>You lost! :( 😭</h2>
+            <Button
+                            className="mt-5 mx-1"
+                            size="lg"
+                            variant="success"
+                            onClick={() => {
+                                goBack();
+                                
+                            }}
+                            >
+                            Return map!
+            </Button>
+        </div>
       )}
     </div>
   );

@@ -36,7 +36,7 @@ function Location(props) {
   const randomIndex = Math.floor(Math.random() * imagePath.length);
   return (
     <Card border="danger" bg="warning" className="card">
-      {/* <Card.Img variant="top" src={`../../public/locations/${imagePath[randomIndex]}`} /> */}
+      {/* <Card.Img variant="top" src="../../public/locations/Eterna_City.png" /> */}
      <Card.Img variant="top" src="https://i.pinimg.com/originals/84/7b/fb/847bfb0ccd3683c6fc8c32b6b99aa153.png" />
 
       <Card.Body>
