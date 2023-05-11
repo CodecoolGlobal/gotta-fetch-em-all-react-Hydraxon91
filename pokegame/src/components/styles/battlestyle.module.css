@@ -50,3 +50,7 @@
     text-transform: capitalize;
     z-index: -1;
 }
+.hpDiv{
+    margin-right: 66%;
+    /* color: antiquewhite; */
+}

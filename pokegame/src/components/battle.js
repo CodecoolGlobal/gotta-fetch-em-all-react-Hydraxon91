@@ -138,14 +138,14 @@ function BattleMenu(props) {
                 className={styles.player}
               ></img>
             </div>
-            <>
+            <div className={styles.hpDiv}>
               <h2 className="mt-5">
                 {props.userPokemonData.name}'s HP: {attackerHP}
               </h2>
               <h2>
                 {props.enemyPokemonData.name}'s HP: {defenderHP}
               </h2>
-            </>
+            </div>
           </div>
           <>
             <div
