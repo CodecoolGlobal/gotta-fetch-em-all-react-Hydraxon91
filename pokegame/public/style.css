@@ -1,0 +1,14 @@
+body {
+  background-image: url("./assets/bg/black-pokemons.jpg");
+}
+
+.bg-image {
+  width: 100vw;
+  height: 100vh;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.card {
+  border: 10px;
+}
