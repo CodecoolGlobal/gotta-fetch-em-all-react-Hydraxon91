@@ -90,7 +90,7 @@ function BattleMenu(props) {
   return (
     <div
       className={styles.background}
-      style={{ backgroundImage: `url(${props.randomBG})`, margin:"auto"}}
+      style={{ backgroundImage: `url(${props.randomBG})`, margin: "auto" }}
     >
       <HPBar
         className="mt-5"
@@ -128,7 +128,9 @@ function BattleMenu(props) {
               className={styles.enemy}
             ></img>
             <div className={styles.playerDiv}>
-              <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
+              <h2 className={styles.playerName}>
+                {props.userPokemonData.name}
+              </h2>
               <img
                 src={props.userPokemonData.sprites.back_default}
                 alt={props.userPokemonData.name}
@@ -170,7 +172,7 @@ function BattleMenu(props) {
                 <div>
                   <Button
                     className="mt-5"
-                    style={{ width: "25%", margin: "auto"}}
+                    style={{ width: "25%", margin: "auto" }}
                     variant="danger"
                     // style={{zIndex: '-2'}}
                     onClick={fighting}
@@ -179,8 +181,8 @@ function BattleMenu(props) {
                   </Button>
                   <Button
                     className="mt-5"
-                    style={{ width: "25%", margin: "auto"}}
-                    variant="danger"
+                    style={{ width: "25%", margin: "auto" }}
+                    variant="warning"
                     onClick={() => {
                       setBattleStart(false);
                     }}
