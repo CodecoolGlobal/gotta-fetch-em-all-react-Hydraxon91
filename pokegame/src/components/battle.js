@@ -15,7 +15,14 @@ function BattleMenu(props) {
     // props.setEnemyPokemonData();
   }
 
+  function updatePokemonHealth(){
+    let data = props.userPokemonData;
+    data.currHP = attackerHP;
+    console.log("data is ", data);
+    props.setUserPokemonData(data)
+  }
   function changePokemon(pokemon) {
+    updatePokemonHealth();
     props.setUserPokemon(pokemon);
     setBattleStart(true);
     //console.log("teszt");
@@ -38,6 +45,7 @@ function BattleMenu(props) {
     const result = fight(updatedAttacker, updatedDefender, props.setUserPokemonData, props.userPokemonData);
     setAttackerHP(result.hpAttacker);
     setDefenderHP(result.hpDefender);
+    updatePokemonHealth();
     if (result.winner === props.userPokemonData.data.name) {
       let loserPokemon = props.enemyPokemonData;
       let newPokemon = {
@@ -66,9 +74,11 @@ function BattleMenu(props) {
       ]);*/
       console.log("You win");
       //console.log(props.usersPokemonArr);
+      updatePokemonHealth();
       GoBack();
     } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
+      updatePokemonHealth();
       GoBack();
     }
   }
@@ -190,6 +200,7 @@ function BattleMenu(props) {
                     style={{ width: "25%", margin: "auto" }}
                     variant="warning"
                     onClick={() => {
+                      updatePokemonHealth();
                       setBattleStart(false);
                     }}
                   >
@@ -200,6 +211,7 @@ function BattleMenu(props) {
                     variant="success"
                     onClick={() => {
                       GoBack(); 
+                      updatePokemonHealth();
                     }}
                     style={{ zIndex: "-1", width: "10%" }}
                   >
