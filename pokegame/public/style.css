@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Pokemon";
+  src: url("./assets/font/Pokemon Solid.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
+  font-family: "Pokemon";
   background-image: url("./assets/bg/black-pokemons.jpg");
+}
+
+h2 {
+  font-family: "Pokemon";
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: yellow;
 }
