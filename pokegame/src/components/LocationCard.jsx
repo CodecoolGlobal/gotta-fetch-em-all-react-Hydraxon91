@@ -11,7 +11,7 @@ function Location(props) {
     
 
   return (
-    <Card border="danger" bg="light">
+    <Card border="danger" bg="light" className="card">
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
         <Card.Title>Area: {areaName}</Card.Title>

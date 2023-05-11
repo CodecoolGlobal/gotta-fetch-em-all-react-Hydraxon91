@@ -19,15 +19,18 @@ function BattleMenu(props) {
   }
   function fighting() {
     const updatedAttacker = {
-      ...props.userPokemonData, stats: [
+      ...props.userPokemonData,
+      stats: [
         {
-          ...props.userPokemonData.stats[0], base_stat: attackerHP,
+          ...props.userPokemonData.stats[0],
+          base_stat: attackerHP,
         },
         ...props.userPokemonData.stats.slice(1),
       ],
     };
     const updatedDefender = {
-      ...props.enemyPokemonData, stats: [
+      ...props.enemyPokemonData,
+      stats: [
         {
           ...props.enemyPokemonData.stats[0],
           base_stat: defenderHP,
@@ -40,11 +43,16 @@ function BattleMenu(props) {
     setDefenderHP(result.hpDefender);
     if (result.winner === props.userPokemonData.name) {
       let loserPokemon = props.enemyPokemonData;
-      let existingPokemon = props.usersPokemonArrData.find(pokemon => pokemon.name === loserPokemon.name);
+      let existingPokemon = props.usersPokemonArrData.find(
+        (pokemon) => pokemon.name === loserPokemon.name
+      );
       if (existingPokemon) {
-        props.setUsersPokemonArrData(oldData => [...oldData.filter(pokemon => pokemon.name !== loserPokemon.name), loserPokemon]);
+        props.setUsersPokemonArrData((oldData) => [
+          ...oldData.filter((pokemon) => pokemon.name !== loserPokemon.name),
+          loserPokemon,
+        ]);
       } else {
-        props.setUsersPokemonArrData(oldData => [...oldData, loserPokemon]);
+        props.setUsersPokemonArrData((oldData) => [...oldData, loserPokemon]);
       }
       /*props.setUsersPokemonArr((oldData) => [
         ...oldData,
@@ -53,9 +61,7 @@ function BattleMenu(props) {
       console.log("You win");
       //console.log(props.usersPokemonArr);
       GoBack();
-    } else if (
-      result.winner === props.enemyPokemonData.name
-    ) {
+    } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
       GoBack();
     }
@@ -87,7 +93,7 @@ function BattleMenu(props) {
     >
       <HPBar
         className="mt-5"
-        variant="danger"
+        variant="success"
         HP={Math.round(
           (attackerHP * 100) / props.userPokemonData?.stats[0].base_stat
         )}
@@ -95,7 +101,7 @@ function BattleMenu(props) {
       ></HPBar>
       <HPBar
         className="mt-5"
-        variant="success"
+        variant="danger"
         HP={Math.round(
           (defenderHP * 100) / props.enemyPokemonData?.stats[0].base_stat
         )}
