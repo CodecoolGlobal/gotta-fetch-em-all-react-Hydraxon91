@@ -17,7 +17,7 @@ function BattleMenu(props) {
   function GoBack() {
     setWonBattle(false);
     props.setBattleState(false);
-    setShowEndFight(false)
+    setShowEndFight(false);
     props.setEnemyPokemon();
     // props.setEnemyPokemonData();
   }
@@ -50,7 +50,12 @@ function BattleMenu(props) {
       ],
     };
 
-    const result = fight(updatedAttacker, updatedDefender, props.setUserPokemonData, props.userPokemonData);
+    const result = fight(
+      updatedAttacker,
+      updatedDefender,
+      props.setUserPokemonData,
+      props.userPokemonData
+    );
     setResult(result);
 
     setAttackerHP(result.hpAttacker);
@@ -89,7 +94,7 @@ function BattleMenu(props) {
         props.enemyPokemonData.name,
       ]);*/
       console.log("You win");
-      setShowEndFight(true)
+      setShowEndFight(true);
       //console.log(props.usersPokemonArr);
       updatePokemonHealth(attackerHP);
       //GoBack();
@@ -98,7 +103,6 @@ function BattleMenu(props) {
       setShowEndFight(true);
       updatePokemonHealth(attackerHP);
       //GoBack();
-
     }
   }
   //Attacker = player, defender = enemy
@@ -120,143 +124,154 @@ function BattleMenu(props) {
       setDefenderHP(props.enemyPokemonData.stats[0].base_stat);
     }
   }, [props.enemyPokemonData]);
-console.log(props.enemyPokemonData);
+  console.log(props.enemyPokemonData);
   return (
-    <div id="test" style={{height: "100%", width:"100%", justifyContent:"center"}}>
-    {showEndFight ? (
-    
-      <EndFight
-        wonBattle = {wonBattle}
-        winner={result.winner}
-        loser={result.winner !== props.enemyPokemonData.name? props.enemyPokemonData : props.userPokemonData.data}
-        goBack={GoBack}
-        // winnerPokemonData={result.winner === props.userPokemonData.name ? props.enemyPokemonData : props.userPokemonData}
-      /> 
-      
-      ) : (
-      <div
-      className={styles.background}
-      style={{ backgroundImage: `url(${props.randomBG})` }}
+    <div
+      id="test"
+      style={{ height: "100%", width: "100%", justifyContent: "center" }}
     >
-      <HPBar
-        className="mt-5"
-        variant="success"
-        HP={Math.round(
-          (attackerHP * 100) / props.userPokemonData?.data.stats[0].base_stat
-        )}
-        label={props.userPokemonData.data?.name}
-      ></HPBar>
-      <HPBar
-        className="mt-5"
-        variant="danger"
-        HP={Math.round(
-          (defenderHP * 100) / props.enemyPokemonData?.stats[0].base_stat
-        )}
-        label={props.enemyPokemonData?.name}
-      ></HPBar>
-
-      {props.enemyPokemonData ? (
-        <div id="battleParent" style={{ height: "100%" }}>
-          <div>
-            <h2 className={styles.enemyName}>{props.enemyPokemonData.name}</h2>
-            <img
-              src={props.enemyPokemonData.sprites.front_default}
-              alt={props.enemyPokemonData.name}
-              className={styles.enemy}
-            ></img>
-            <div className={styles.playerDiv}>
-              <h2 className={styles.playerName}>
-                {props.userPokemonData.data.name}
-              </h2>
-              <img
-                src={props.userPokemonData.data.sprites.back_default}
-                alt={props.userPokemonData.data.name}
-                className={styles.player}
-              ></img>
-            </div>
-            <div className={styles.hpDiv}>
-              <h2 className="mt-5">
-                {props.userPokemonData.data.name}'s HP: {attackerHP}
-              </h2>
-              <h2>
-                {props.enemyPokemonData.name}'s HP: {defenderHP}
-              </h2>
-            </div>
-          </div>
-          <>
-            <div
-              className="row mt-5"
-              style={{ position: "relative", top: "35%" }}
-            >
-              {!battleStart ? (
-                props.usersPokemonArrData.map((pokemon, index) => (
-                  <div className="col-md-4 mt-5" key={index}>
-                    <Pokemon
-                      name={pokemon.data.name}
-                      hp={pokemon.data.stats[0].base_stat}
-                      currHP={pokemon.currHP}
-                      attack={pokemon.data.stats[1].base_stat}
-                      defense={pokemon.data.stats[2].base_stat}
-                      sprite={pokemon.data.sprites.front_default}
-                      text="Choose pokemon!"
-                      handleClick={changePokemon}
-                    ></Pokemon>
-                  </div>
-                ))
-              ) : (
-                <div style={{ marginTop: "10%" }}>
-                  <Button
-                    className="mt-5 mx-1"
-                    size="lg"
-                    variant="danger"
-                    onClick={fighting}
-                  >
-                    Fight!
-                  </Button>
-                  <Button
-                    className="mt-5 mx-1"
-                    size="lg"
-                    variant="warning"
-                    onClick={() => {
-                      updatePokemonHealth(attackerHP);
-                      setBattleStart(false);
-                    }}
-                  >
-                    Change Pokemon
-                  </Button>
-                  <Button
-                    className="mt-5 mx-1"
-                    size="lg"
-                    variant="success"
-                    onClick={() => {
-                      GoBack();
-                      updatePokemonHealth(attackerHP);
-                    }}
-                  >
-                    Flee!
-                  </Button>
-                </div>
-              )}
-            </div>
-          </>
-        </div>
+      {showEndFight ? (
+        <EndFight
+          wonBattle={wonBattle}
+          winner={result.winner}
+          loser={
+            result.winner !== props.enemyPokemonData.name
+              ? props.enemyPokemonData
+              : props.userPokemonData.data
+          }
+          goBack={GoBack}
+          // winnerPokemonData={result.winner === props.userPokemonData.name ? props.enemyPokemonData : props.userPokemonData}
+        />
       ) : (
-        <div style={{ display: "block" }}>
-          {/* <h2>Loading players, if there in no enemy, go back</h2> */}
-          <SpinnerAnim style={{ margin: "auto" }} />
-          <Button
-            className="mt-5"
-            variant="success"
-            onClick={() => GoBack()}
-            size="lg"
+        <div className="d-flex justify-content-center">
+          <div
+            className={styles.background}
+            style={{ backgroundImage: `url(${props.randomBG})` }}
           >
-            Go back!
-          </Button>
+            <HPBar
+              className="mt-5"
+              variant="success"
+              HP={Math.round(
+                (attackerHP * 100) /
+                  props.userPokemonData?.data.stats[0].base_stat
+              )}
+              label={props.userPokemonData.data?.name}
+            ></HPBar>
+            <HPBar
+              className="mt-5"
+              variant="danger"
+              HP={Math.round(
+                (defenderHP * 100) / props.enemyPokemonData?.stats[0].base_stat
+              )}
+              label={props.enemyPokemonData?.name}
+            ></HPBar>
+
+            {props.enemyPokemonData ? (
+              <div id="battleParent" style={{ height: "100%" }}>
+                <div>
+                  <h2 className={styles.enemyName}>
+                    {props.enemyPokemonData.name}
+                  </h2>
+                  <img
+                    src={props.enemyPokemonData.sprites.front_default}
+                    alt={props.enemyPokemonData.name}
+                    className={styles.enemy}
+                  ></img>
+                  <div className={styles.playerDiv}>
+                    <h2 className={styles.playerName}>
+                      {props.userPokemonData.data.name}
+                    </h2>
+                    <img
+                      src={props.userPokemonData.data.sprites.back_default}
+                      alt={props.userPokemonData.data.name}
+                      className={styles.player}
+                    ></img>
+                  </div>
+                  <div className={styles.hpDiv}>
+                    <h2 className="mt-5">
+                      {props.userPokemonData.data.name}'s HP: {attackerHP}
+                    </h2>
+                    <h2>
+                      {props.enemyPokemonData.name}'s HP: {defenderHP}
+                    </h2>
+                  </div>
+                </div>
+                <>
+                  <div
+                    className="row mt-5"
+                    style={{ position: "relative", top: "35%" }}
+                  >
+                    {!battleStart ? (
+                      props.usersPokemonArrData.map((pokemon, index) => (
+                        <div className="col-md-4 mt-5" key={index}>
+                          <Pokemon
+                            name={pokemon.data.name}
+                            hp={pokemon.data.stats[0].base_stat}
+                            currHP={pokemon.currHP}
+                            attack={pokemon.data.stats[1].base_stat}
+                            defense={pokemon.data.stats[2].base_stat}
+                            sprite={pokemon.data.sprites.front_default}
+                            text="Choose pokemon!"
+                            handleClick={changePokemon}
+                          ></Pokemon>
+                        </div>
+                      ))
+                    ) : (
+                      <div style={{ marginTop: "10%" }}>
+                        <Button
+                          className="mt-5 mx-1"
+                          size="lg"
+                          variant="danger"
+                          onClick={fighting}
+                        >
+                          Fight!
+                        </Button>
+                        <Button
+                          className="mt-5 mx-1"
+                          size="lg"
+                          variant="warning"
+                          onClick={() => {
+                            updatePokemonHealth(attackerHP);
+                            setBattleStart(false);
+                          }}
+                        >
+                          Change Pokemon
+                        </Button>
+                        <Button
+                          className="mt-5 mx-1"
+                          size="lg"
+                          variant="success"
+                          onClick={() => {
+                            GoBack();
+                            updatePokemonHealth(attackerHP);
+                          }}
+                        >
+                          Flee!
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </>
+              </div>
+            ) : (
+              <div style={{ display: "block" }}>
+                {/* <h2>Loading players, if there in no enemy, go back</h2> */}
+                <SpinnerAnim style={{ margin: "auto" }} />
+                <Button
+                  className="mt-5"
+                  variant="success"
+                  onClick={() => GoBack()}
+                  size="lg"
+                >
+                  Go back!
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
-  )}
-  </div>)
+  );
 }
 
 export default BattleMenu;
