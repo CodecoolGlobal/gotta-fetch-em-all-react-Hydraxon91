@@ -7,6 +7,6 @@ export default function HPBar(props) {
     const pokemon = label
 
   
-    return <ProgressBar animated variant={variant} now={HP} label={`${pokemon} ${HP}%`} />;
+    return <ProgressBar className="hpbar" animated variant={variant} now={HP} label={`${pokemon} ${HP}%`} />;
 }
 

@@ -5,32 +5,33 @@ import fight from "../fight";
 import Pokemon from "./PokemonCard";
 import HPBar from "./HPBar";
 import EndFight from "./EndFight";
+import SpinnerAnim from "./Spinner";
 
 function BattleMenu(props) {
   //console.log(fight);
+  //console.log("props.userpokemondata ", props.userPokemonData);
   const [showEndFight, setShowEndFight] = useState(false);
   const [result, setResult] = useState(null);
 
   function GoBack() {
     props.setBattleState(false);
     props.setEnemyPokemon();
+    // props.setEnemyPokemonData();
   }
+
   function changePokemon(pokemon) {
     props.setUserPokemon(pokemon);
     setBattleStart(true);
-    console.log("teszt");
+    //console.log("teszt");
   }
   function fighting() {
     const updatedAttacker = {
-      ...props.userPokemonData, stats: [
-        {
-          ...props.userPokemonData.stats[0], base_stat: attackerHP,
-        },
-        ...props.userPokemonData.stats.slice(1),
-      ],
+      ...props.userPokemonData,
+      currHP: attackerHP
     };
     const updatedDefender = {
-      ...props.enemyPokemonData, stats: [
+      ...props.enemyPokemonData,
+      stats: [
         {
           ...props.enemyPokemonData.stats[0],
           base_stat: defenderHP,
@@ -38,17 +39,33 @@ function BattleMenu(props) {
         ...props.enemyPokemonData.stats.slice(1),
       ],
     };
-    const result = fight(updatedAttacker, updatedDefender);
+
+    const result = fight(updatedAttacker, updatedDefender, props.setUserPokemonData, props.userPokemonData);
     setResult(result);
+
     setAttackerHP(result.hpAttacker);
     setDefenderHP(result.hpDefender);
-    if (result.winner === props.userPokemonData.name) {
+    if (result.winner === props.userPokemonData.data.name) {
       let loserPokemon = props.enemyPokemonData;
-      let existingPokemon = props.usersPokemonArrData.find(pokemon => pokemon.name === loserPokemon.name);
+      let newPokemon = {
+        id: props.usersPokemonArrData[props.usersPokemonArrData.length-1].id+1,
+        data: loserPokemon,
+        currHP: loserPokemon.stats[0].base_stat
+      }
+      let existingPokemon = props.usersPokemonArrData.find(
+        (pokemon) => pokemon.data.name === loserPokemon.name
+      );
       if (existingPokemon) {
-        props.setUsersPokemonArrData(oldData => [...oldData.filter(pokemon => pokemon.name !== loserPokemon.name), loserPokemon]);
+        props.setUsersPokemonArrData((oldData) => [
+          ...oldData.filter((pokemon) => pokemon.data.name !== loserPokemon.name),
+          newPokemon,
+        ]);
       } else {
-        props.setUsersPokemonArrData(oldData => [...oldData, loserPokemon]);
+        console.log(props.usersPokemonArrData);
+        
+        props.setUsersPokemonArrData((oldData) => [...oldData, newPokemon]);
+        props.setUsersPokemonArr((oldData) => [...oldData, loserPokemon.name]);
+        console.log(props.usersPokemonArr);
       }
       /*props.setUsersPokemonArr((oldData) => [
         ...oldData,
@@ -57,10 +74,8 @@ function BattleMenu(props) {
       console.log("You win");
       setShowEndFight(true)
       //console.log(props.usersPokemonArr);
-      //GoBack();
-    } else if (
-      result.winner === props.enemyPokemonData.name
-    ) {
+      GoBack();
+    } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
       setShowEndFight(true);
       //GoBack();
@@ -68,16 +83,16 @@ function BattleMenu(props) {
   }
   //Attacker = player, defender = enemy
   const [attackerHP, setAttackerHP] = useState(
-    props.userPokemonData?.stats?.[0]?.base_stat || 0
+    props.userPokemonData?.currHP || 0
   );
   const [defenderHP, setDefenderHP] = useState(
     props.enemyPokemonData?.stats?.[0]?.base_stat || 0
   );
-  const [battleStart, setBattleStart] = useState(false);
+  const [battleStart, setBattleStart] = useState(true);
 
   useEffect(() => {
     if (props.userPokemonData) {
-      setAttackerHP(props.userPokemonData.stats[0].base_stat);
+      setAttackerHP(props.userPokemonData.currHP);
     }
   }, [props.userPokemonData]);
   useEffect(() => {
@@ -97,32 +112,33 @@ function BattleMenu(props) {
       ) : (
       <div
       className={styles.background}
-      style={{ backgroundImage: `url(${props.randomBG})` }}>
-      <HPBar
-        className="mt-5"
-        variant="danger"
-        HP={Math.round(
-          (attackerHP * 100) / props.userPokemonData?.stats[0].base_stat
-        )}
-        label={props.userPokemonData?.name}
-      ></HPBar>
+      style={{ backgroundImage: `url(${props.randomBG})`, margin: "auto" }}
+    >
       <HPBar
         className="mt-5"
         variant="success"
+        HP={Math.round(
+          (attackerHP * 100) / props.userPokemonData?.data.stats[0].base_stat
+        )}
+        label={props.userPokemonData.data?.name}
+      ></HPBar>
+      <HPBar
+        className="mt-5"
+        variant="danger"
         HP={Math.round(
           (defenderHP * 100) / props.enemyPokemonData?.stats[0].base_stat
         )}
         label={props.enemyPokemonData?.name}
       ></HPBar>
 
-      <Button
+      {/* <Button
         className="mt-5"
         variant="warning"
         onClick={() => GoBack()}
         style={{ zIndex: "-1" }}
       >
         Go Back
-      </Button>
+      </Button> */}
       {/* <h1>This is the battle menu</h1> */}
       {props.enemyPokemonData ? (
         <div id="battleParent" style={{ height: "100%" }}>
@@ -133,21 +149,24 @@ function BattleMenu(props) {
               alt={props.enemyPokemonData.name}
               className={styles.enemy}
             ></img>
-            <h2 className={styles.playerName}>{props.userPokemonData.name}</h2>
-            <img
-              src={props.userPokemonData.sprites.back_default}
-              alt={props.userPokemonData.name}
-              className={styles.player}
-            ></img>
-
-            <>
+            <div className={styles.playerDiv}>
+              <h2 className={styles.playerName}>
+                {props.userPokemonData.data.name}
+              </h2>
+              <img
+                src={props.userPokemonData.data.sprites.back_default}
+                alt={props.userPokemonData.data.name}
+                className={styles.player}
+              ></img>
+            </div>
+            <div className={styles.hpDiv}>
               <h2 className="mt-5">
-                {props.userPokemonData.name}'s HP: {attackerHP}
+                {props.userPokemonData.data.name}'s HP: {attackerHP}
               </h2>
               <h2>
                 {props.enemyPokemonData.name}'s HP: {defenderHP}
               </h2>
-            </>
+            </div>
           </div>
           <>
             <div
@@ -158,11 +177,12 @@ function BattleMenu(props) {
                 props.usersPokemonArrData.map((pokemon, index) => (
                   <div className="col-md-4 mt-5" key={index}>
                     <Pokemon
-                      name={pokemon.name}
-                      hp={pokemon.stats[0].base_stat}
-                      attack={pokemon.stats[1].base_stat}
-                      defense={pokemon.stats[2].base_stat}
-                      sprite={pokemon.sprites.front_default}
+                      name={pokemon.data.name}
+                      hp={pokemon.data.stats[0].base_stat}
+                      currHP={pokemon.currHP}
+                      attack={pokemon.data.stats[1].base_stat}
+                      defense={pokemon.data.stats[2].base_stat}
+                      sprite={pokemon.data.sprites.front_default}
                       // onClick={() => {
                       //   props.setUserPokemon(pokemon);
                       //   console.log("teszt");
@@ -172,7 +192,7 @@ function BattleMenu(props) {
                   </div>
                 ))
               ) : (
-                <div>
+                <div style={{ marginTop: "10%" }}>
                   <Button
                     className="mt-5"
                     style={{ width: "25%", margin: "auto" }}
@@ -185,12 +205,22 @@ function BattleMenu(props) {
                   <Button
                     className="mt-5"
                     style={{ width: "25%", margin: "auto" }}
-                    variant="danger"
+                    variant="warning"
                     onClick={() => {
                       setBattleStart(false);
                     }}
                   >
                     Change Pokemon
+                  </Button>
+                  <Button
+                    className="mt-5"
+                    variant="success"
+                    onClick={() => {
+                      GoBack(); 
+                    }}
+                    style={{ zIndex: "-1", width: "10%" }}
+                  >
+                    Flee!
                   </Button>
                 </div>
               )}
@@ -198,7 +228,19 @@ function BattleMenu(props) {
           </>
         </div>
       ) : (
-        <h2>Loading players, if there in no enemy, go back</h2>
+        <div style={{display:"block"}}>
+          <h2>Loading players, if there in no enemy, go back</h2>
+          {/* <SpinnerAnim style={{margin:"auto"}}/> */}
+          <Button
+                    className="mt-5"
+                    variant="success"
+                    onClick={() => GoBack()}
+                    style={{ zIndex: "-1", width: "10%" }}
+                  >
+                    Go back!
+          </Button>
+        </div>
+        
       )}
     </div>
   )}

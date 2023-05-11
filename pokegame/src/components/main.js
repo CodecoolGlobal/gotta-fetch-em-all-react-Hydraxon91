@@ -27,7 +27,7 @@ function MainPage(props) {
           );
           //console.log(pokemonArray);
         } else {
-          pokemon = "NO POKEMON HERE";
+          //pokemon = "NO POKEMON HERE";
         }
         return (
           <Col key={index} className="col-lg-3 col-md-4 col-sm-6 mb-4">
