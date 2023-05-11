@@ -14,7 +14,14 @@ function BattleMenu(props) {
     props.setEnemyPokemon();
     // props.setEnemyPokemonData();
   }
+
+  function updatePokemonHealth(){
+    let data = props.userPokemonData;
+    props.userPokemonData.currHP = attackerHP;
+    props.setUserPokemonData(data)
+  }
   function changePokemon(pokemon) {
+    updatePokemonHealth();
     props.setUserPokemon(pokemon);
     setBattleStart(true);
     //console.log("teszt");
@@ -65,9 +72,11 @@ function BattleMenu(props) {
       ]);*/
       console.log("You win");
       //console.log(props.usersPokemonArr);
+      updatePokemonHealth();
       GoBack();
     } else if (result.winner === props.enemyPokemonData.name) {
       console.log("You lost");
+      updatePokemonHealth();
       GoBack();
     }
   }
@@ -100,7 +109,7 @@ function BattleMenu(props) {
         className="mt-5"
         variant="success"
         HP={Math.round(
-          (attackerHP * 100) / props.userPokemonData?.currHP
+          (attackerHP * 100) / props.userPokemonData?.data.stats[0].base_stat
         )}
         label={props.userPokemonData.data?.name}
       ></HPBar>
@@ -189,6 +198,7 @@ function BattleMenu(props) {
                     style={{ width: "25%", margin: "auto" }}
                     variant="warning"
                     onClick={() => {
+                      updatePokemonHealth();
                       setBattleStart(false);
                     }}
                   >
@@ -197,7 +207,7 @@ function BattleMenu(props) {
                   <Button
                     className="mt-5"
                     variant="success"
-                    onClick={() => GoBack()}
+                    onClick={() => {GoBack(); updatePokemonHealth();}}
                     style={{ zIndex: "-1", width: "10%" }}
                   >
                     Flee!
