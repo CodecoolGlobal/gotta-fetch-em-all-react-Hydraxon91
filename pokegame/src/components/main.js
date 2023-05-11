@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Location from "./LocationCard";
 import { Row, Col } from "react-bootstrap";
+import Intro from "./StartPage";
 
 function MainPage(props) {
   let locationAreaData = props.locationAreaData;
@@ -12,7 +13,15 @@ function MainPage(props) {
     props.setBattleState(true);
   }
 
-  return (
+  const [IntroPlayed, SetIntroPlayed] = useState(false);
+
+  const handleNext = () => {
+    SetIntroPlayed(true);
+  };
+
+  return !IntroPlayed ? (
+    <Intro handleClick={handleNext}></Intro>
+  ) : (
     <Row className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
       {locationAreaData.map((e, index) => {
         let pokemon;
