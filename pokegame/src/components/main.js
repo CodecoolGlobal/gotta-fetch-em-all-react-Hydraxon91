@@ -13,7 +13,8 @@ function MainPage(props) {
     props.setBattleState(true);
   }
 
-  const [IntroPlayed, SetIntroPlayed] = useState(false);
+  // const [IntroPlayed, SetIntroPlayed] = useState(false);
+  const { IntroPlayed, SetIntroPlayed } = props
 
   const handleNext = () => {
     SetIntroPlayed(true);

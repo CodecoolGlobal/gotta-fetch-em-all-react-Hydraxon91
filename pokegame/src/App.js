@@ -23,6 +23,7 @@ function App() {
   const [userPokemonData, setUserPokemonData] = useState();
   const [enemyPokemon, setEnemyPokemon] = useState();
   const [enemyPokemonData, setEnemyPokemonData] = useState();
+  const [IntroPlayed, SetIntroPlayed] = useState(false);
 
   
   // const randomBG = bgs[Math.floor(Math.random() * 11)];
@@ -118,7 +119,9 @@ function App() {
         locationAreaData ? 
           !inBattle ?
             <MainPage 
-            locationAreaData={locationAreaData} setBattleState = {setInBattle} setEnemyPokemon={setEnemyPokemon}></MainPage>
+            locationAreaData={locationAreaData} setBattleState = {setInBattle} 
+            setEnemyPokemon={setEnemyPokemon} SetIntroPlayed={SetIntroPlayed}
+            IntroPlayed={IntroPlayed}></MainPage>
           :
             <BattleMenu setBattleState = {setInBattle} enemyPokemonData={enemyPokemonData} 
             userPokemonData={userPokemonData} setUserPokemonData={setUserPokemonData} 
