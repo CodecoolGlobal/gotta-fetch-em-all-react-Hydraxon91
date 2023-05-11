@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Button from "react-bootstrap/Button";
 
 function Intro(props) {
-    const handleNext = props.handleNext;
+    const handleNext = props.handleClick;
 
     const videoRef = useRef(null);
     
