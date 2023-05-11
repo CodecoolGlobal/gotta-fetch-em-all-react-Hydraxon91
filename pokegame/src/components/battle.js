@@ -12,11 +12,12 @@ function BattleMenu(props) {
   function GoBack() {
     props.setBattleState(false);
     props.setEnemyPokemon();
+    // props.setEnemyPokemonData();
   }
   function changePokemon(pokemon) {
     props.setUserPokemon(pokemon);
     setBattleStart(true);
-    console.log("teszt");
+    //console.log("teszt");
   }
   function fighting() {
     const updatedAttacker = {
