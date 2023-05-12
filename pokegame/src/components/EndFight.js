@@ -11,9 +11,10 @@ function EndFight(props) {
       <h2>Loser: {loser.name}</h2>
       <br></br>
       <br></br>
-      <h2>You have one new Pokemon!</h2>
+      {/* <h2>You have one new Pokemon!</h2> */}
       {wonBattle ? (
         <div className="row" style={{ justifyContent: "center" }}>
+          <h2>You have one new Pokemon!</h2>
           <div className="col-md-4 mt-5">
             <Pokemon
               name={loser.name}
