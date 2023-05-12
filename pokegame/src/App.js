@@ -51,20 +51,21 @@ function App() {
 
   //Fetching all the pokemons in the UsersPokemonArr
   useEffect(()=>{
-    Promise.all(usersPokemonArr.map((e, index)=>{
-      fetch(`${pokeApi}${e}`).then(res=>res.json().then(data=>{
-        console.log(usersPokemonArrData.length);
-        let usersPokemon = {
+    Promise.all(usersPokemonArr.map((e)=>
+      fetch(`${pokeApi}${e}`).then(res=>res.json())
+    )).then((newPokemonData)=>{
+      const extendedPokemonData = newPokemonData.map((pokemon, index)=>{
+        console.log(pokemon);
+        return {
           id: index+1,
-          data: data,
-          currHP: data.stats[0].base_stat
+          data: pokemon,
+          currHP: pokemon.stats[0].base_stat
         }
-        setUsersPokemonArrData(oldData => [...oldData, usersPokemon]);
-        //console.log("fetched ", data.name);
-      }))
-    }))
+      })
+      setUsersPokemonArrData(extendedPokemonData)
+    })
   }, [])
-  usersPokemonArrData.sort((a,b)=>a.id-b.id)
+  //usersPokemonArrData.sort((a,b)=>a.id-b.id)
   console.log(usersPokemonArrData);
 
   //Fetches the first 20 locations
